@@ -1,8 +1,9 @@
 login:
   title: 'Welcome back!'
-  description: "Use your studen E-Mail."
+  description: "Use your student E-Mail."
   submit: Login
   forgot_passwort: 'Forgot your Password?'
+  new_here: 'New here?'
   errors:
     login_failed: 'Login failed.'
     email_not_found: 'E-Mail not found.'
@@ -14,9 +15,9 @@ register:
   description: 'Create an account to register for events and propose you own.'
   submit: "Create account"
   back_to_login: 'Back to Login.'
-    success:
-      email_sent: 'We have sent you a registration link to your E-Mail.'
-      registration_confirm: 'Thank you for confirming your E-Mail. You are logged in and can now register for events.'
+  success:
+    email_sent: 'We have sent you a registration link to your E-Mail.'
+    registration_confirm: 'Thank you for confirming your E-Mail. You are logged in and can now register for events.'
   error:
     email_already_used: 'This E-Mail has already been used. Login or reset your password instead.'
 

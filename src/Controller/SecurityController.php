@@ -12,7 +12,6 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseDoctrineController;
-use App\Entity\Delegation;
 use App\Entity\User;
 use App\Form\User\RegisterType;
 use App\Form\UserTrait\LoginType;
@@ -84,11 +83,12 @@ class SecurityController extends BaseDoctrineController
 
         $user = new User();
         $user->setIsAdmin(true);
+        $user->setIsEnabled(true);
 
         $form = $this->createForm(RegisterType::class, $user);
         $form->add('submit', SubmitType::class, ['translation_domain' => 'security', 'label' => 'setup.submit']);
 
-        if ($this->tryRegisterAndLoginUser($form, $request, $user, $translator, $authenticator, $guardHandler)) {
+        if ($this->handleSetPasswordForm($form, $request, $user, $translator, $authenticator, $guardHandler)) {
             $this->displaySuccess($translator->trans('setup.success.welcome', [], 'security'));
 
             return $this->redirectToRoute('index');
@@ -98,28 +98,41 @@ class SecurityController extends BaseDoctrineController
     }
 
     /**
-     * @Route("/register/{delegationName}/{registrationHash}", name="register")
+     * @Route("/register", name="register")
      *
      * @return Response
      */
-    public function registerAction(Request $request, string $delegationName, string $registrationHash, TranslatorInterface $translator, LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler)
+    public function registerAction(Request $request, TranslatorInterface $translator, LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler)
     {
-        if (!($delegation = $this->getDelegationToRegisterFor($delegationName, $registrationHash, $translator))) {
-            return $this->redirectToRoute('login');
-        }
-
         $user = new User();
-        $user->setDelegation($delegation);
         $form = $this->createForm(RegisterType::class, $user);
         $form->add('submit', SubmitType::class, ['translation_domain' => 'security', 'label' => 'register.submit']);
 
-        if ($this->tryRegisterAndLoginUser($form, $request, $user, $translator, $authenticator, $guardHandler)) {
-            $this->displaySuccess($translator->trans('register.success.welcome', [], 'security'));
+        if ($this->handleSetPasswordForm($form, $request, $user, $translator, $authenticator, $guardHandler)) {
+            $this->displaySuccess($translator->trans('register.success.email_sent', [], 'security'));
 
-            return $this->redirectToRoute('delegation_view', ['delegation' => $delegation->getId()]);
+            return $this->redirectToRoute('login');
         }
 
-        return $this->render('security/register.html.twig', ['form' => $form->createView(), 'delegation' => $delegation]);
+        return $this->render('security/register.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/register/confirm/{authenticationHash}", name="register_confirm")
+     *
+     * @return Response
+     */
+    public function registerConfirmAction(Request $request, $authenticationHash, TranslatorInterface $translator, LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler)
+    {
+        if (!($user = $this->getUserFromAuthenticationHash($authenticationHash, $translator))) {
+            return $this->redirectToRoute('login');
+        }
+
+        $user->setIsEnabled(true);
+        $this->displaySuccess($translator->trans('register.success.registration_confirm', [], 'security'));
+        $this->loginUser($user, $authenticator, $guardHandler, $request);
+
+        return $this->redirectToRoute('index');
     }
 
     /**
@@ -165,7 +178,7 @@ class SecurityController extends BaseDoctrineController
         $form->add('submit', SubmitType::class, ['translation_domain' => 'security', 'label' => 'recover_confirm.submit']);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && $this->applySetPasswordType($form, $user, $translator)) {
+        if ($form->isSubmitted() && $form->isValid() && $this->ensurePasswordsConformity($form, $user, $translator)) {
             $user->generateAuthenticationHash();
             $this->fastSave($user);
 
@@ -188,20 +201,7 @@ class SecurityController extends BaseDoctrineController
         throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    private function getDelegationToRegisterFor(string $delegationName, string $registrationHash, TranslatorInterface $translator): ?Delegation
-    {
-        $delegation = $this->getDoctrine()->getRepository(Delegation::class)->findOneBy(['name' => $delegationName]);
-
-        if ($delegation->getRegistrationHash() !== $registrationHash) {
-            $this->displayError($translator->trans('register.error.invalid_hash', [], 'security'));
-
-            return null;
-        }
-
-        return $delegation;
-    }
-
-    private function applySetPasswordType(FormInterface $form, User $user, TranslatorInterface $translator)
+    private function ensurePasswordsConformity(FormInterface $form, User $user, TranslatorInterface $translator): bool
     {
         $plainPassword = $form->get('plainPassword')->getData();
         $repeatPlainPassword = $form->get('repeatPlainPassword')->getData();
@@ -262,10 +262,10 @@ class SecurityController extends BaseDoctrineController
         }
     }
 
-    private function tryRegisterAndLoginUser(FormInterface $form, Request $request, User $user, TranslatorInterface $translator, LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler): bool
+    private function handleSetPasswordForm(FormInterface $form, Request $request, User $user, TranslatorInterface $translator, LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler): bool
     {
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && $this->applySetPasswordType($form->get('password'), $user, $translator)) {
+        if ($form->isSubmitted() && $form->isValid() && $this->ensurePasswordsConformity($form->get('password'), $user, $translator)) {
             $existingUser = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
             if (null !== $existingUser) {
                 $message = $translator->trans('register.error.email_already_used', [], 'security');
@@ -276,8 +276,6 @@ class SecurityController extends BaseDoctrineController
 
             $user->generateAuthenticationHash();
             $this->fastSave($user);
-
-            $this->loginUser($user, $authenticator, $guardHandler, $request);
 
             return true;
         }

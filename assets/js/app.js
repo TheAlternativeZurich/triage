@@ -4,9 +4,7 @@ import './fontawesome'
 const $ = require('jquery')
 require('bootstrap')
 require('typeface-open-sans')
-require('bootstrap-select')
 require('flatpickr')
-require('jquery-autocompleter')
 
 // attach jquery to window
 window.$ = $
@@ -43,13 +41,3 @@ $(document)
         window.location.reload(true)
       })
   })
-
-function initializeInputs () {
-  $('input[type=datetime-local]').flatpickr({
-    enableTime: true,
-    altFormat: 'F j, Y H:i',
-    altInput: true,
-    dateFormat: 'Z',
-    time_24hr: true
-  })
-}
