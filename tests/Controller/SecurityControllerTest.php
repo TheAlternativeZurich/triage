@@ -11,9 +11,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Delegation;
 use App\Entity\User;
-use App\Tests\DataFixtures\TestDelegationFixtures;
 use App\Tests\Traits\AssertAuthenticationTrait;
 use App\Tests\Traits\AssertEmailTrait;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,14 +47,17 @@ class SecurityControllerTest extends WebTestCase
     public function testCanRegister()
     {
         $client = $this->createClient();
-        $this->loadFixtures([TestDelegationFixtures::class]);
+        $this->loadFixtures();
 
         $email = 'f@mangel.io';
         $password = 'asdf1234';
 
         $this->assertNotAuthenticated($client);
 
-        $this->assertCanRegister($client, $email, $password);
+        $this->register($client, $email, $password);
+        $this->assertNotAuthenticated($client);
+
+        $this->registerConfirm($client, $email);
         $this->assertAuthenticated($client);
 
         $this->assertCanLogout($client);
@@ -74,6 +75,37 @@ class SecurityControllerTest extends WebTestCase
         $authenticationHash = $this->getAuthenticationHash($email);
         $this->assertCanRecoverConfirm($client, $authenticationHash, $password);
         $this->assertAuthenticated($client);
+    }
+
+    private function register(KernelBrowser $client, string $email, string $password): void
+    {
+        $crawler = $client->request('GET', '/register');
+        $this->assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('register[submit]')->form();
+        $form['register[profile][email]'] = $email;
+        $form['register[password][plainPassword]'] = $password;
+        $form['register[password][repeatPlainPassword]'] = $password;
+
+        $client->submit($form);
+        $this->assertResponseRedirects('/login');
+
+        $authenticationHash = $this->getAuthenticationHash($email);
+        $this->assertSingleEmailSentWithBodyContains($authenticationHash);
+
+        $client->followRedirect();
+        $this->assertStringContainsString('sent you', $client->getResponse()->getContent()); // alert to user
+    }
+
+    private function registerConfirm(KernelBrowser $client, string $email): void
+    {
+        $authenticationHash = $this->getAuthenticationHash($email);
+
+        $client->request('GET', '/register/confirm/'.$authenticationHash);
+        $this->assertResponseRedirects('/');
+
+        $client->followRedirect();
+        $this->assertStringContainsString('confirm', $client->getResponse()->getContent()); // alert to user
     }
 
     private function assertCanLogin(KernelBrowser $client, string $email, string $password): void
@@ -148,16 +180,6 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseRedirects();
         $client->followRedirect();
         $this->assertStringContainsString('set', $client->getResponse()->getContent()); // alert to user
-    }
-
-    private function getDelegationRegistrationHash(string $name)
-    {
-        $registry = static::$container->get(ManagerRegistry::class);
-        $repository = $registry->getRepository(Delegation::class);
-        /** @var Delegation $delegation */
-        $delegation = $repository->findOneBy(['name' => $name]);
-
-        return $delegation->getRegistrationHash();
     }
 
     private function getAuthenticationHash(string $email)

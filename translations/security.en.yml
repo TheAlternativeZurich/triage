@@ -16,7 +16,7 @@ register:
   submit: "Create account"
   back_to_login: 'Back to Login.'
   success:
-    email_sent: 'We have sent you a registration link to your E-Mail.'
+    email_sent: 'We have sent you an E-Mail with the confirmation link.'
     registration_confirm: 'Thank you for confirming your E-Mail. You are logged in and can now register for events.'
   error:
     email_already_used: 'This E-Mail has already been used. Login or reset your password instead.'

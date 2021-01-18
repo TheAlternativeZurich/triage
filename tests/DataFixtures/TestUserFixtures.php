@@ -11,7 +11,6 @@
 
 namespace App\Tests\DataFixtures;
 
-use App\Entity\Delegation;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -19,7 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class TestUserFixtures extends Fixture implements OrderedFixtureInterface
 {
-    public const ORDER = TestDelegationFixtures::ORDER + 1;
+    public const ORDER = 1;
     public const USER_ADMIN_EMAIL = 'test@thealternative.ch';
     public const USER_DELEGATION_EMAIL = 'test2@thealternative.ch';
 
@@ -32,12 +31,10 @@ class TestUserFixtures extends Fixture implements OrderedFixtureInterface
         $admin->setIsEnabled(true);
         $manager->persist($admin);
 
-        $delegation = $manager->getRepository(Delegation::class)->findOneBy(['name' => TestDelegationFixtures::DELEGATION_NAME]);
         $delegationUser = new User();
         $delegationUser->setEmail(self::USER_DELEGATION_EMAIL);
         $delegationUser->setPasswordFromPlain('asdf');
         $delegationUser->setIsEnabled(true);
-        $delegationUser->setDelegation($delegation);
         $manager->persist($delegationUser);
 
         $manager->flush();
