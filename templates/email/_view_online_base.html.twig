@@ -11,8 +11,17 @@
             <div class="center-content-primary shadow">
                 {% apply inky_to_html %}
                     {% if emailType == 0 %}
-                        {{ block("body", 'email/recover_confirm.html.twig') }}
+                        {% set path = 'email/register_confirm_content.twig' %}
+                    {% elseif emailType == 1 %}
+                        {% set path = 'email/recover_confirm_content.twig' %}
                     {% endif %}
+                    <p>{{ block('message', path) }}</p>
+                    <spacer size="15"></spacer>
+                    <center>
+                        <button href="{{ absolute_url(link) }}">
+                            {{ block('link_text', path) }}
+                        </button>
+                    </center>
                 {% endapply %}
             </div>
             <div class="center-content-secondary">

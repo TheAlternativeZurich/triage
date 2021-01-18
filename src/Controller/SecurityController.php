@@ -88,7 +88,10 @@ class SecurityController extends BaseDoctrineController
         $form = $this->createForm(RegisterType::class, $user);
         $form->add('submit', SubmitType::class, ['translation_domain' => 'security', 'label' => 'setup.submit']);
 
-        if ($this->handleSetPasswordForm($form, $request, $user, $translator, $authenticator, $guardHandler)) {
+        if ($this->handleSetPasswordForm($form, $request, $user, $translator)) {
+            $this->fastSave($user);
+            $this->loginUser($user, $authenticator, $guardHandler, $request);
+
             $this->displaySuccess($translator->trans('setup.success.welcome', [], 'security'));
 
             return $this->redirectToRoute('index');
@@ -102,19 +105,43 @@ class SecurityController extends BaseDoctrineController
      *
      * @return Response
      */
-    public function registerAction(Request $request, TranslatorInterface $translator, LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler)
+    public function registerAction(Request $request, TranslatorInterface $translator, EmailServiceInterface $emailService)
     {
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
         $form->add('submit', SubmitType::class, ['translation_domain' => 'security', 'label' => 'register.submit']);
 
-        if ($this->handleSetPasswordForm($form, $request, $user, $translator, $authenticator, $guardHandler)) {
-            $this->displaySuccess($translator->trans('register.success.email_sent', [], 'security'));
-
-            return $this->redirectToRoute('login');
+        if ($this->handleSetPasswordForm($form, $request, $user, $translator)) {
+            if ($this->tryRegisterUser($user, $translator, $emailService)) {
+                return $this->redirectToRoute('login');
+            }
         }
 
         return $this->render('security/register.html.twig', ['form' => $form->createView()]);
+    }
+
+    private function tryRegisterUser(User $user, TranslatorInterface $translator, EmailServiceInterface $emailService)
+    {
+        $existingUser = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
+        if (null !== $existingUser) {
+            $message = $translator->trans('register.error.email_already_used', [], 'security');
+            $this->displayError($message);
+
+            return false;
+        }
+
+        $user->generateAuthenticationHash();
+        $this->fastSave($user);
+
+        if (!$emailService->sendRegisterConfirmLink($user)) {
+            $this->displayError($translator->trans('register.error.email_already_used', [], 'security'));
+
+            return false;
+        }
+
+        $this->displaySuccess($translator->trans('register.success.email_sent', [], 'security'));
+
+        return true;
     }
 
     /**
@@ -129,6 +156,9 @@ class SecurityController extends BaseDoctrineController
         }
 
         $user->setIsEnabled(true);
+        $user->generateAuthenticationHash();
+        $this->fastSave($user);
+
         $this->displaySuccess($translator->trans('register.success.registration_confirm', [], 'security'));
         $this->loginUser($user, $authenticator, $guardHandler, $request);
 
@@ -262,21 +292,10 @@ class SecurityController extends BaseDoctrineController
         }
     }
 
-    private function handleSetPasswordForm(FormInterface $form, Request $request, User $user, TranslatorInterface $translator, LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler): bool
+    private function handleSetPasswordForm(FormInterface $form, Request $request, User $user, TranslatorInterface $translator): bool
     {
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $this->ensurePasswordsConformity($form->get('password'), $user, $translator)) {
-            $existingUser = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
-            if (null !== $existingUser) {
-                $message = $translator->trans('register.error.email_already_used', [], 'security');
-                $this->displayError($message);
-
-                return false;
-            }
-
-            $user->generateAuthenticationHash();
-            $this->fastSave($user);
-
             return true;
         }
 

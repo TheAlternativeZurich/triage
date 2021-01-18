@@ -11,7 +11,7 @@
 
 namespace App\Form\Event;
 
-use App\Form\Traits\EditEventTraitType;
+use App\Form\EventTrait\EditEventTraitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 

@@ -52,7 +52,7 @@ class Event extends BaseEntity
     /**
      * @var User|null
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="lectures")
      */
     private $lecturer;
 

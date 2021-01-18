@@ -18,6 +18,6 @@ class OnlyEmailType extends AbstractUserTraitType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', EmailType::class);
+        $builder->add('email', EmailType::class, ['help' => 'email_help']);
     }
 }

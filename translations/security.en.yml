@@ -1,6 +1,6 @@
 login:
-  title: 'Welcome back!'
-  description: "Use your student E-Mail."
+  title: 'Login'
+  description: "Welcome back! Use your student E-Mail."
   submit: Login
   forgot_passwort: 'Forgot your Password?'
   new_here: 'New here?'
@@ -11,7 +11,7 @@ login:
     account_disabled: 'This Account is deactivated.'
 
 register:
-  title: 'Welcome!'
+  title: 'Register'
   description: 'Create an account to register for events and propose you own.'
   submit: "Create account"
   back_to_login: 'Back to Login.'
@@ -22,7 +22,7 @@ register:
     email_already_used: 'This E-Mail has already been used. Login or reset your password instead.'
 
 recover:
-  title: 'Reset password.'
+  title: 'Reset password'
   description: 'We will send you a recover link to your E-Mail.'
   submit: 'Send recover link'
   forgot_email: 'Forgot your E-Mail or other problems?'
@@ -35,7 +35,7 @@ recover:
     email_not_found: 'E-Mail was not found in the system.'
 
 recover_confirm:
-  title: 'Welcome back!'
+  title: 'Reset password'
   description: 'Set your new password.'
   submit: 'Set password'
   success:

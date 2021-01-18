@@ -12,6 +12,12 @@ edit:
   success:
     edited: 'Event changed.'
 
+mine:
+  title: 'My events'
+
+moderate:
+  title: 'Moderate events'
+
 event_publish:
   action: "publish"
   success:

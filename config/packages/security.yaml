@@ -55,5 +55,4 @@ security:
         - { path: ^/recover, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, role: ROLE_USER }
 
-        - { path: ^/events, role: ROLE_USER }
-        - { path: ^/, role: ROLE_ADMIN }
+        - { path: ^/, role: ROLE_USER }

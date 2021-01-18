@@ -12,8 +12,7 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseController;
-use App\Entity\Delegation;
-use App\Service\Interfaces\InvoiceServiceInterface;
+use App\Entity\Event;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,22 +26,10 @@ class IndexController extends BaseController
      *
      * @return Response
      */
-    public function indexAction(InvoiceServiceInterface $invoiceService)
+    public function indexAction()
     {
-        $delegations = $this->getDoctrine()->getRepository(Delegation::class)->findBy([], ['name' => 'ASC']);
+        $events = $this->getDoctrine()->getRepository(Event::class)->findBy(['public' => true], ['startDate' => 'ASC']);
 
-        $participantReviewProgresses = [];
-        foreach ($delegations as $delegation) {
-            $participantReviewProgresses[$delegation->getId()] = $delegation->getParticipantReviewProgress();
-        }
-
-        $travelGroupReviewProgresses = [];
-        foreach ($delegations as $delegation) {
-            $travelGroupReviewProgresses[$delegation->getId()] = $delegation->getTravelGroupReviewProgress();
-        }
-
-        $invoiceByDelegation = $invoiceService->getInvoiceByDelegation($delegations);
-
-        return $this->render('index.html.twig', ['delegations' => $delegations, 'delegation_invoices' => $invoiceByDelegation, 'participant_review_progresses' => $participantReviewProgresses, 'travel_group_review_progresses' => $travelGroupReviewProgresses]);
+        return $this->render('index.html.twig', ['events' => $events]);
     }
 }

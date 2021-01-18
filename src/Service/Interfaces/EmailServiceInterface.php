@@ -11,6 +11,7 @@
 
 namespace App\Service\Interfaces;
 
+use App\Entity\Event;
 use App\Entity\User;
 
 interface EmailServiceInterface
@@ -18,4 +19,8 @@ interface EmailServiceInterface
     public function sendRegisterConfirmLink(User $user): bool;
 
     public function sendRecoverConfirmLink(User $user): bool;
+
+    public function sendEventCreatedNotification(Event $event): bool;
+
+    public function sendEventPublicNotification(Event $event): bool;
 }

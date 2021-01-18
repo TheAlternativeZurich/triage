@@ -3,6 +3,11 @@ questions: 'If you have questions, please write'
 mail_wrong_displayed: 'This E-Mail is not displayed properly? Please click here.'
 sent_by: 'E-Mail sent by'
 
+register_confirm:
+  subject: 'Register on %page%'
+  message: 'We received a request to register on %page%. Use the following link to confirm your email.'
+  confirm_link: 'Confirm email'
+
 recover_confirm:
   subject: 'Reset password on %page%'
   message: 'We received a request to reset your password on %page%. Use the following link to do this now.'

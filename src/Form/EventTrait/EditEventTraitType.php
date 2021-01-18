@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits;
+namespace App\Form\EventTrait;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;

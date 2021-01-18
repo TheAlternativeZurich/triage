@@ -124,6 +124,6 @@ class Email extends BaseEntity
 
     public function getContext(): array
     {
-        return ['sentBy' => $this->sentBy, 'identifier' => $this->identifier, 'emailType' => $this->type];
+        return ['sentBy' => $this->sentBy, 'identifier' => $this->identifier, 'emailType' => $this->type, 'link' => $this->link];
     }
 }
