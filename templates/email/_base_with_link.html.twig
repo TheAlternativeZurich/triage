@@ -1,0 +1,13 @@
+{% extends "email/_base.html.twig" %}
+
+{% trans_default_domain "email" %}
+
+{% block body %}
+    <p>{% block message %}{% endblock message %}</p>
+    <spacer size="15"></spacer>
+    <center>
+        <button href="{{ absolute_url(link) }}">
+            {% block link_text %}{% endblock %}
+        </button>
+    </center>
+{% endblock %}

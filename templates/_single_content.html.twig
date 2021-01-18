@@ -1,0 +1,27 @@
+{% extends "_content.html.twig" %}
+
+{% macro breadcrumb_item(text, link) %}
+    {% if app.request.pathInfo == link %}
+        <li class="breadcrumb-item active" aria-current="page">{{ text }}</li>
+    {% else %}
+        <li class="breadcrumb-item">
+            <a href="{{ link }}">{{ text }}</a>
+        </li>
+    {% endif %}
+{% endmacro %}
+{% import _self as own_macros %}
+
+{% block content %}
+    <div class="content p-0">
+        <div class="tile">
+            <h1>{{ block('title') }}</h1>
+            <p>{{ block('description') }}</p>
+
+            <hr/>
+
+            {% block single_content %}
+
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

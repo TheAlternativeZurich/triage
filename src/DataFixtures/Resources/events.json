@@ -1,0 +1,16 @@
+[
+  {
+    "name": "PDF experiments",
+    "description": "Take a deeper look into how a PDF file is structured, and learn about the pro / const of the file format. As part of this talk, we will look at the PDF and TTF specification and a (unfinished) PDF compiler (=a program that creates PDFs). At the end of this talk, you can create a minimal PDF from scratch in a text editor.",
+    "startDate": "2021-04-30T17:00:00",
+    "experience": "Wrote a small PDF compiler",
+    "public": true
+  },
+  {
+    "name": "web",
+    "description": "This is a crash course to HTML, CSS, JavaScript and PHP; we'll learn some design / user experience on the way. You need no prior knowledge, and need not to be a programmer! After this course, you will be able to create your own simple webpage.",
+    "startDate": "2021-04-30T17:00:00",
+    "experience": "Published many web applications.",
+    "public": false
+  }
+]

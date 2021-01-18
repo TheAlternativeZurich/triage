@@ -1,0 +1,46 @@
+{% macro nav_item(link, text) %}
+    <li class="nav-item {% if app.request.pathInfo == link %}active{% endif %}">
+        <a class="nav-link" href="{{ link }}">{{ text }}</a>
+    </li>
+{% endmacro %}
+{% import _self as own_macros %}
+
+{% extends "_base.html.twig" %}
+
+{% block body %}
+    <div class="container{% if fluid is defined %}-fluid{% endif %}">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
+                    {{ own_macros.nav_item(path("index"), "index.title"|trans({}, "index")) }}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ own_macros.nav_item(path("events_moderate") }}
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav">
+                    {% block navbar_secondary %}
+                        <a href="mailto:{{ env_support_email }}" class="nav-link">
+                            <i class="fal fa-envelope-open"></i>
+                        </a>
+                    {% endblock %}
+                    {% if app.user is not null %}
+                        {{ own_macros.nav_item(path("logout"), "logout.title"|trans({}, "security")) }}
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        {% block content %}
+
+        {% endblock %}
+
+        <p class="text-right text-secondary mt-2 {% if fluid is defined %}mr-2{% endif %}">
+            {{ "source_code_on"|trans({}, "framework") }}
+            <a href="https://github.com/thealternative/triage" target="_blank">github</a>
+        </p>
+    </div>
+{% endblock %}

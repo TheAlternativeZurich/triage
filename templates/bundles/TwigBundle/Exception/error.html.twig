@@ -1,0 +1,30 @@
+{% extends '_content.html.twig' %}
+
+{% block title %}{{ "twig_bundle_exception.title"|trans }}{% endblock %}
+{% block description %}{{ "twig_bundle_exception.description"|trans({"%statusCode%": exception.statusCode, "%statusText%": exception.statusText}) }}{% endblock %}
+
+{% trans_default_domain "framework" %}
+
+{% block content %}
+    <div class="content tile">
+        <h1>{{ block("title") }}</h1>
+
+        <p class="text-secondary">
+            {{ block("description") }}
+        </p>
+
+        <hr/>
+        <p>
+            {{ "twig_bundle_exception.help"|trans }}
+        </p>
+        <p>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-primary" href="{{ path("index") }}">{{ "twig_bundle_exception.continue"|trans() }}</a>
+            {% elseif is_granted('ROLE_DELEGATION') %}
+                <a class="btn btn-primary" href="{{ path("delegation_view", {"delegation": app.user.delegation.id}) }}">{{ "twig_bundle_exception.continue"|trans() }}</a>
+            {% else %}
+                <a class="btn btn-primary" href="{{ path("login") }}">{{ "twig_bundle_exception.continue"|trans() }}</a>
+            {% endif %}
+        </p>
+    </div>
+{% endblock %}

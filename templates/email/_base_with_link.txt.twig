@@ -1,0 +1,8 @@
+{% extends "email/_base.txt.twig" %}
+
+{% trans_default_domain "email" %}
+
+{% block body %}
+{% block message %}{% endblock message %}
+{% block link_text %}{% endblock link_text %}: {{ absolute_url(link) }}
+{% endblock %}

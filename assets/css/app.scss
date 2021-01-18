@@ -1,0 +1,103 @@
+$border-radius: 0;
+$blue: #244471;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1000px
+) !default;
+
+@import '~bootstrap/scss/bootstrap';
+@import '~flatpickr/dist/flatpickr.css';
+
+h1 {
+  margin-left: -0.05em; /* correct source sans spacing */
+}
+
+// add a drop shadow
+@mixin shadow($shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.16)) {
+  box-shadow: $shadow;
+}
+
+html,
+body {
+  background-image: url('../images/background.png');
+  background-repeat: repeat;
+  height: 100%;
+}
+
+//center layout for messages & easy forms
+.center-wrapper {
+  align-items: center;
+  background: $gray-100;
+  display: flex;
+  min-height: 100%;
+}
+
+.center-content {
+  margin: 40px auto;
+  max-width: 540px;
+  width: 100%;
+}
+
+.center-content.wide {
+  max-width: 700px;
+}
+
+.center-content-primary {
+  background: $white;
+  padding: 2rem 2rem 1rem;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.center-content-secondary {
+  padding: 1rem 2rem;
+}
+
+.content {
+  margin-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.tile {
+  @include shadow();
+
+  background-color: #fff;
+  padding: 1em;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.col-form-label {
+  font-weight: bold;
+}
+
+.admin-wrapper {
+  padding: 1em;
+}
+
+// stylelint-disable-next-line selector-no-qualifying-type
+label.required::after {
+  color: $red;
+  content: '* ';
+}
+
+.minimal-width {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.text-sm {
+  font-size: 0.8em;
+}

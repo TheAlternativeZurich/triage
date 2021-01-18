@@ -1,0 +1,59 @@
+{% block set_password_widget %}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.plainPassword) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.repeatPlainPassword) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% macro form_row_buttons(form) %}
+    <div class="row mt-4">
+        <div class="col">
+            {% if form.submit is defined %}
+                {% if form.submit_and_lock is defined or form.submit_and_unlock is defined %}
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-outline-primary'}}) }}
+                {% else %}
+                    {{ form_widget(form.submit) }}
+                {% endif %}
+            {% endif %}
+            {% if form.submit_and_lock is defined %}
+                {{ form_widget(form.submit_and_lock, {'attr': {'class': 'btn btn-success'}}) }}
+            {% endif %}
+            {% if form.submit_and_unlock is defined %}
+                {{ form_widget(form.submit_and_unlock, {'attr': {'class': 'btn btn-warning'}}) }}
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% block edit_event_trait_widget %}
+    {% import _self as own_macros %}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.startDate) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.parts) }}
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block edit_event_widget %}
+    {% import _self as own_macros %}
+
+    {{ form_row(form.event) }}
+
+    <hr/>
+
+    {{ form_row(form.experience) }}
+{% endblock %}

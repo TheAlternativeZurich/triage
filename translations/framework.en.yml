@@ -1,0 +1,20 @@
+date_time:
+  Mon: Mon
+  Tue: Tue
+  Wed: Wed
+  Thu: Thu
+  Fri: Fri
+  Sat: Sat
+  Sun: Sun
+form:
+  remove:
+    confirm_consequences: 'I acknowledge that this is a destructive operation which can not be reversed.'
+source_code_on: 'source code on'
+
+twig_bundle_exception:
+  title: 'An Error Occurred!'
+  description: 'The server returned "%statusCode% %statusText%".'
+  help: 'Something is broken. Retry what you attempted; if it still does not work, please contact us. Sorry for any inconvenience caused!'
+  continue: 'Continue'
+
+

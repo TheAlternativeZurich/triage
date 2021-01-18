@@ -1,0 +1,16 @@
+{% extends "_single_content.html.twig" %}
+
+{% block single_content %}
+    <div class="row">
+        <div class="col-lg-10">
+            {% block form_content_before %}
+
+            {% endblock %}
+            {% block form_content %}
+                <div class="form-wrapper">
+                    {{ form(form) }}
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

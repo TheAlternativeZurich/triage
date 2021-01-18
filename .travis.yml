@@ -1,0 +1,75 @@
+language: php
+
+services:
+  - mysql
+
+cache:
+  directories:
+    # backend
+    - $HOME/.composer/cache/files
+    - vendor
+
+    # frontend
+    - node_modules
+
+matrix:
+  fast_finish: true
+  include:
+    # next target version
+    - php: 7.4
+      env:
+        - COVERAGE=true
+
+before_install:
+  # backend
+  - if [[ $COVERAGE == false ]]; then phpenv config-rm xdebug.ini; fi
+  - php --version
+
+  # frontend
+  - nvm install v12 # set node version to 12
+  - node --version
+
+install:
+  # backend
+  - composer install --no-scripts
+
+  # frontend
+  - npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+  - npm config set "//npm.fontawesome.com/:_authToken" $FONTAWESOME_AUTH_TOKEN
+  - yarn install
+
+# prepare tests
+before_script:
+  # frontend
+  - yarn encore production
+
+  # backend
+  - php vendor/bin/requirements-checker # check travis image supports symfony application
+
+# execute tests
+script:
+  # backend dependency checks
+  - composer validate
+  - php bin/console security:check
+
+  # backend linters
+  - if [[ "$COVERAGE" == true ]]; then ./vendor/bin/php-cs-fixer fix --diff --dry-run -v; fi
+  - php bin/console lint:yaml config
+  - php bin/console lint:twig templates
+
+  # backend tests
+  - cp .env.travis .env.local
+  - php bin/console doctrine:database:create --no-interaction
+  - php bin/console doctrine:migrations:migrate --no-interaction
+  - php vendor/bin/phpunit
+
+  # frontend dependency checks
+  - yarn check
+  - yarn audit --groups dependencies
+
+  # frontend linters
+  - yarn run lint
+
+after_script:
+  # scrutinizer reporting
+  - if [[ $COVERAGE == true ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover ./clover.xml; fi

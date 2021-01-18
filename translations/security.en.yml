@@ -1,0 +1,57 @@
+login:
+  title: 'Welcome back!'
+  description: "Use your studen E-Mail."
+  submit: Login
+  forgot_passwort: 'Forgot your Password?'
+  errors:
+    login_failed: 'Login failed.'
+    email_not_found: 'E-Mail not found.'
+    password_wrong: 'Password wrong.'
+    account_disabled: 'This Account is deactivated.'
+
+register:
+  title: 'Welcome!'
+  description: 'Create an account to register for events and propose you own.'
+  submit: "Create account"
+  back_to_login: 'Back to Login.'
+    success:
+      email_sent: 'We have sent you a registration link to your E-Mail.'
+      registration_confirm: 'Thank you for confirming your E-Mail. You are logged in and can now register for events.'
+  error:
+    email_already_used: 'This E-Mail has already been used. Login or reset your password instead.'
+
+recover:
+  title: 'Reset password.'
+  description: 'We will send you a recover link to your E-Mail.'
+  submit: 'Send recover link'
+  forgot_email: 'Forgot your E-Mail or other problems?'
+  remembered_login: 'Retry login?'
+  back_to_login: 'Back to Login.'
+  success:
+    email_sent: 'We have sent your a recover link to your E-Mail.'
+  fail:
+    email_not_sent: 'E-Mail could not be sent. This is a technical error, please do contact the support.'
+    email_not_found: 'E-Mail was not found in the system.'
+
+recover_confirm:
+  title: 'Welcome back!'
+  description: 'Set your new password.'
+  submit: 'Set password'
+  success:
+    password_set: 'New password set successfully.'
+  error:
+    passwords_do_not_match: 'Passwords do not match.'
+    invalid_hash: 'Link is no longer valid. Please acknowledge that each link can only be used once.'
+    password_too_short: 'The password is too short. Please use at least 8 characters.'
+
+logout:
+  title: Logout
+
+setup:
+  title: 'Setup triage tool'
+  description: 'Setup the administrator account.'
+  submit: 'Create administrator account'
+  error:
+    already_setup: 'An administrator account already exists.'
+  success:
+    welcome: 'Welcome :).'

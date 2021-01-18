@@ -1,0 +1,12 @@
+{
+  "travelGroup_location": [
+    {
+      "value": "Zurich Mainstation",
+      "label": "Zurich Mainstation"
+    },
+    {
+      "value": "Zurich Airport (ZRH)",
+      "label": "Zurich Airport (ZRH)"
+    }
+  ]
+}
