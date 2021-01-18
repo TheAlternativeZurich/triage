@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class RegistrationFixture extends Fixture implements OrderedFixtureInterface
 {
-    const ORDER = UserFixture::ORDER;
+    const ORDER = EventFixture::ORDER + 1;
 
     /**
      * @var SerializerInterface

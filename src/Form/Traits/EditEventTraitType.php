@@ -14,6 +14,7 @@ namespace App\Form\Traits;
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,21 +22,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EditEventTraitType extends AbstractType
 {
-    /**
-     * EditDelegationAttendanceType constructor.
-     */
-    public function __construct(string $guestSurcharge, string $currency)
-    {
-        $this->guestSurcharge = $guestSurcharge;
-        $this->currency = $currency;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class);
         $builder->add('description', TextareaType::class);
         $builder->add('startDate', DateTimeType::class);
-        $builder->add('parts', DateTimeType::class);
+        $builder->add('parts', NumberType::class);
+        $builder->add('minRegistrations', NumberType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

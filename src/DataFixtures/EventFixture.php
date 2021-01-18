@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class EventFixture extends Fixture implements OrderedFixtureInterface
 {
-    const ORDER = UserFixture::ORDER;
+    const ORDER = UserFixture::ORDER + 1;
 
     /**
      * @var SerializerInterface
@@ -43,7 +43,6 @@ class EventFixture extends Fixture implements OrderedFixtureInterface
         /** @var User $lecturer */
         $lecturer = $this->getReference(UserFixture::LECTURER_REFERENCE);
         foreach ($events as $event) {
-            $event->setEndDate((clone $event->getStartDate())->add(new \DateInterval('PT2H')));
             $event->setLecturer($lecturer);
 
             $manager->persist($event);

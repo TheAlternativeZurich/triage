@@ -36,6 +36,13 @@ class Event extends BaseEntity
     private $experience;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $minRegistrations;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -80,6 +87,16 @@ class Event extends BaseEntity
     public function setPublic(bool $public): void
     {
         $this->public = $public;
+    }
+
+    public function getMinRegistrations(): ?int
+    {
+        return $this->minRegistrations;
+    }
+
+    public function setMinRegistrations(?int $minRegistrations): void
+    {
+        $this->minRegistrations = $minRegistrations;
     }
 
     public function getLecturer(): ?User

@@ -1,6 +1,6 @@
 {
   "type": "project",
-  "name": "TheAlternativeZurich/triage",
+  "name": "the-alternative-zurich/triage",
   "description": "triage of future events for TheAlternative",
   "license": "MIT",
   "require": {
