@@ -27,3 +27,13 @@ event_unpublish:
   action: "unpublish"
   success:
     regenerated: "Event unpublished. You might want to notify the author & any registrations."
+
+register:
+  title: "Register"
+  success:
+    registered: 'You are registered.'
+
+deregister:
+  title: "Deregister"
+  success:
+    deregistered: 'You have been unregistered.'

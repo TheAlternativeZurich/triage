@@ -101,3 +101,20 @@ label.required::after {
 .text-sm {
   font-size: 0.8em;
 }
+
+.masonry-grid-item,
+.masonry-grid-sizer {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .masonry-grid {
+    margin-right: -1em;
+  }
+
+  .masonry-grid-item,
+  .masonry-grid-sizer {
+    margin-right: 0.5em;
+    width: calc(50% - 0.5em);
+  }
+}

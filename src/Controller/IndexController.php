@@ -13,6 +13,7 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseController;
 use App\Entity\Event;
+use App\Service\Interfaces\ConfigurationServiceInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,10 +27,11 @@ class IndexController extends BaseController
      *
      * @return Response
      */
-    public function indexAction()
+    public function indexAction(ConfigurationServiceInterface $configurationService)
     {
         $events = $this->getDoctrine()->getRepository(Event::class)->findBy(['public' => true], ['startDate' => 'ASC']);
+        $triagePurpose = $configurationService->getTriagePurpose();
 
-        return $this->render('index.html.twig', ['events' => $events]);
+        return $this->render('index.html.twig', ['events' => $events, 'triagePurpose' => $triagePurpose]);
     }
 }

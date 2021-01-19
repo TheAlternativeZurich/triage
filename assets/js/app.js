@@ -5,6 +5,7 @@ const $ = require('jquery')
 require('bootstrap')
 require('typeface-open-sans')
 require('flatpickr')
+const Masonry = require('masonry-layout')
 
 // attach jquery to window
 window.$ = $
@@ -24,6 +25,15 @@ $(document)
 
     $('[data-toggle="popover"]')
       .popover()
+
+    if ($('.masonry-grid').length) {
+      // noinspection JSUnusedLocalSymbols
+      const masonry = new Masonry('.masonry-grid', { // eslint-disable-line no-unused-vars
+        columnWidth: '.masonry-grid-sizer',
+        itemSelector: '.masonry-grid-item',
+        percentPosition: true
+      })
+    }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {

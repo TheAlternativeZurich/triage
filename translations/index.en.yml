@@ -1,3 +1,7 @@
 index:
   title: 'Events'
   description: 'All events'
+  upcoming_events: 'Upcoming events'
+  registered: 'registered'
+  deregister: 'deregister'
+  required_registrations: 'required registrations'

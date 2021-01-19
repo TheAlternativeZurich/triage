@@ -11,6 +11,7 @@
         "foundation-emails": "^2.3.1",
         "jquery": "^3.5.1",
         "jquery-autocompleter": "^0.3.0",
+        "masonry-layout": "^4.2.2",
         "popper.js": "^1.16.1",
         "typeface-open-sans": "^0.0.75"
     },

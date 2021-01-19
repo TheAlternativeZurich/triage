@@ -13,11 +13,13 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseDoctrineController;
 use App\Entity\Event;
+use App\Entity\Registration;
 use App\Form\Event\EditEventType;
 use App\Security\Voter\EventVoter;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -48,6 +50,47 @@ class EventController extends BaseDoctrineController
         $events = $this->getDoctrine()->getRepository(Event::class)->findBy([], ['public' => 'DESC', 'startDate' => 'ASC']);
 
         return $this->render('event/moderate.html.twig', ['events' => $events]);
+    }
+
+    /**
+     * @Route("/register/{event}", name="event_register")
+     *
+     * @return Response
+     */
+    public function registerAction(Event $event, TranslatorInterface $translator)
+    {
+        $existingRegistration = $event->getRegistrationForUser($this->getUser());
+        if ($existingRegistration) {
+            throw new BadRequestHttpException();
+        }
+
+        $registration = Registration::createFromUser($event, $this->getUser());
+        $this->fastSave($registration);
+
+        $message = $translator->trans('register.success.registered', [], 'event');
+        $this->displaySuccess($message);
+
+        return $this->redirectToRoute('index');
+    }
+
+    /**
+     * @Route("/deregister/{event}", name="event_deregister")
+     *
+     * @return Response
+     */
+    public function deregisterAction(Event $event, TranslatorInterface $translator)
+    {
+        $existingRegistration = $event->getRegistrationForUser($this->getUser());
+        if (!$existingRegistration) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->fastRemove($existingRegistration);
+
+        $message = $translator->trans('deregister.success.deregistered', [], 'event');
+        $this->displaySuccess($message);
+
+        return $this->redirectToRoute('index');
     }
 
     /**

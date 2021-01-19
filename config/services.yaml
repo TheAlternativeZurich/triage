@@ -15,6 +15,7 @@ services:
             $supportEmail: '%env(SUPPORT_EMAIL)%'
             $environment: '%kernel.environment%'
             $publicDir: '%kernel.project_dir%/public'
+            $assetsDir: '%kernel.project_dir%/assets'
             $persistentDir: '%kernel.project_dir%/var/persistent'
             $transientDir: '%kernel.project_dir%/var/transient'
 

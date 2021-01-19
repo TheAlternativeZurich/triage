@@ -20,6 +20,8 @@ data:
   files:
     - path: .env.local
       required: true
+    - path: assets/configuration/triage_purpose.json
+      required: true
 
 scripts:
   build:

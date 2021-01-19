@@ -24,7 +24,7 @@ class EditEventTraitType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class);
+        $builder->add('title', TextType::class);
         $builder->add('description', TextareaType::class);
         $builder->add('startDate', DateTimeType::class);
         $builder->add('parts', NumberType::class);

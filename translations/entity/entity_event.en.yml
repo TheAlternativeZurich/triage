@@ -4,3 +4,5 @@ entity:
 
 experience: "Experience"
 experience_help: "Please refer to past projects / experiences you have had with the topic you want to talk about. We will publish the event as soon as we verified the information. No need to be concerned; we simply want to avoid the Dunning Kruger effect. If you are past the Valley Of Despair, you'll be fine."
+event:
+  parts: 'parts (each 45min)'

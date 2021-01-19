@@ -116,4 +116,20 @@ class Event extends BaseEntity
     {
         return $this->registrations;
     }
+
+    public function sufficientRegistrations(): bool
+    {
+        return $this->registrations->count() >= $this->minRegistrations;
+    }
+
+    public function getRegistrationForUser(User $user): ?Registration
+    {
+        foreach ($this->registrations as $registration) {
+            if ($registration->getUser() === $user) {
+                return $registration;
+            }
+        }
+
+        return null;
+    }
 }

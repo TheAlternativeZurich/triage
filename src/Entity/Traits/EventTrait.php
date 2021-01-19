@@ -20,7 +20,7 @@ trait EventTrait
      *
      * @ORM\Column(type="text")
      */
-    private $name;
+    private $title;
 
     /**
      * @var string|null
@@ -43,14 +43,14 @@ trait EventTrait
      */
     private $parts;
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(?string $name): void
+    public function setTitle(?string $title): void
     {
-        $this->name = $name;
+        $this->title = $title;
     }
 
     public function getDescription(): ?string
