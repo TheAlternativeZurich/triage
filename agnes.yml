@@ -4,7 +4,7 @@ agnes:
 config:
   path: .config
   repository:
-    url: git@gitlab.ethz.com:thealternative/deploy/triage.git
+    url: git@gitlab.ethz.ch:thealternative/deploy/triage.git
 
 build:
   path: .build
