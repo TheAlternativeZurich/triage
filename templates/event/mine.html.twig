@@ -1,0 +1,12 @@
+{% extends "_single_content.html.twig" %}
+
+{% block title %}{{ "mine.title"|trans }}{% endblock %}
+{% block description %}{{ "mine.description"|trans }}{% endblock %}
+
+{% trans_default_domain "event" %}
+
+{% block content %}
+    {% for event in events %}
+
+    {% endfor %}
+{% endblock %}
