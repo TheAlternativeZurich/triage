@@ -102,7 +102,7 @@ class SecurityControllerTest extends WebTestCase
         $authenticationHash = $this->getAuthenticationHash($email);
 
         $client->request('GET', '/register/confirm/'.$authenticationHash);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects();
 
         $client->followRedirect();
         $this->assertStringContainsString('confirm', $client->getResponse()->getContent()); // alert to user

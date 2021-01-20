@@ -20,6 +20,7 @@ register:
     registration_confirm: 'Thank you for confirming your E-Mail. You are logged in and can now register for events.'
   error:
     email_already_used: 'This E-Mail has already been used. Login or reset your password instead.'
+    email_not_sent: 'E-Mail could not be sent. This is a technical error, please do contact the support.'
 
 recover:
   title: 'Reset password'

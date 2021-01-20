@@ -134,7 +134,7 @@ class SecurityController extends BaseDoctrineController
         $this->fastSave($user);
 
         if (!$emailService->sendRegisterConfirmLink($user)) {
-            $this->displayError($translator->trans('register.error.email_already_used', [], 'security'));
+            $this->displayError($translator->trans('register.error.email_not_sent', [], 'security'));
 
             return false;
         }
@@ -161,6 +161,10 @@ class SecurityController extends BaseDoctrineController
 
         $this->displaySuccess($translator->trans('register.success.registration_confirm', [], 'security'));
         $this->loginUser($user, $authenticator, $guardHandler, $request);
+
+        if ($request->getSession() && ($targetPath = $request->getSession()->get('_security.main.target_path'))) {
+            return $this->redirect($targetPath);
+        }
 
         return $this->redirectToRoute('index');
     }

@@ -11,19 +11,23 @@
 
 namespace App\Tests\Traits;
 
+use PHPUnit\Framework\Constraint\LogicalNot;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\HttpFoundation\Test\Constraint\ResponseIsRedirected;
 
 trait AssertAuthenticationTrait
 {
     private function assertNotAuthenticated(KernelBrowser $client)
     {
-        $client->request('GET', '/');
+        $client->request('GET', '/events/mine');
         $this->assertResponseRedirects('/login');
     }
 
     private function assertAuthenticated(KernelBrowser $client)
     {
-        $client->request('GET', '/login');
-        $this->assertResponseRedirects();
+        $client->request('GET', '/events/mine');
+        $constraint = new ResponseIsRedirected();
+        $notRedirects = new LogicalNot($constraint);
+        $this->assertThatForResponse($notRedirects);
     }
 }
