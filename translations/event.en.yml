@@ -30,6 +30,7 @@ event_unpublish:
 
 register:
   title: "Register"
+  registered: 'registered'
   success:
     registered: 'You are registered.'
 

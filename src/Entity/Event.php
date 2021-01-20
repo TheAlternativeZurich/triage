@@ -29,6 +29,13 @@ class Event extends BaseEntity
     use EventTrait;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $identifier;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(type="text")
@@ -67,6 +74,16 @@ class Event extends BaseEntity
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
+    }
+
+    public function setIdentifier(string $identifier): void
+    {
+        $this->identifier = $identifier;
     }
 
     public function getExperience(): ?string
@@ -122,8 +139,12 @@ class Event extends BaseEntity
         return $this->registrations->count() >= $this->minRegistrations;
     }
 
-    public function getRegistrationForUser(User $user): ?Registration
+    public function getRegistrationForUser(?User $user): ?Registration
     {
+        if (!$user) {
+            return null;
+        }
+
         foreach ($this->registrations as $registration) {
             if ($registration->getUser() === $user) {
                 return $registration;

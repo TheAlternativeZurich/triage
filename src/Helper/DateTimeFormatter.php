@@ -17,6 +17,7 @@ class DateTimeFormatter
 {
     const DATE_TIME_FORMAT = 'd.m.Y H:i';
     const DATE_FORMAT = 'd.m.Y';
+    const TIME_FORMAT = 'H:i';
 
     public static function toStringUTCTimezone(\DateTime $dateTime)
     {

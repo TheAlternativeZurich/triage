@@ -55,4 +55,8 @@ security:
         - { path: ^/recover, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, role: ROLE_USER }
 
+        # public event list & share view
+        - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/e/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
         - { path: ^/, role: ROLE_USER }

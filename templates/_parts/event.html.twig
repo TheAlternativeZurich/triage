@@ -1,0 +1,23 @@
+{% macro display_event_datetime(event) %}
+    {{ event.startDate|dateFormat }}
+    -
+    {{ event.startDate|timeFormat }}
+    -
+    {{ event.parts }} {{ "event.parts"|trans({}, "entity_event") }}
+{% endmacro %}
+
+{% macro display_event_registration(event) %}
+    {% if event.registrationForUser(app.user) %}
+        <span class="text-success">{{ "register.registered"|trans({}, "event") }}</span>
+        (<a href="{{ path("event_deregister", {"event": event.id}) }}">{{ "deregister.title"|trans({}, "event")|lower }}</a>)
+    {% else %}
+        <a class="btn btn-outline-primary" href="{{ path("event_register", {"event": event.id}) }}">
+            {{ "register.title"|trans({}, "event") }}
+        </a>
+    {% endif %}
+    {% if event.minRegistrations > 0 %}
+        <span class="ml-2 {% if event.sufficientRegistrations %}text-success{% endif %}">
+               {{ event.registrations|length }} / {{ event.minRegistrations }} {{ "index.required_registrations"|trans({}, "index") }}
+            </span>
+    {% endif %}
+{% endmacro %}

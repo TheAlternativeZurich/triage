@@ -15,6 +15,7 @@ use App\Controller\Base\BaseController;
 use App\Entity\Event;
 use App\Service\Interfaces\ConfigurationServiceInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -33,5 +34,21 @@ class IndexController extends BaseController
         $triagePurpose = $configurationService->getTriagePurpose();
 
         return $this->render('index.html.twig', ['events' => $events, 'triagePurpose' => $triagePurpose]);
+    }
+
+    /**
+     * @Route("e/{identifier}", name="event_share", priority="-10")
+     *
+     * @return Response
+     */
+    public function shareAction(string $identifier)
+    {
+        /** @var Event $event */
+        $event = $this->getDoctrine()->getRepository(Event::class)->findOneBy(['identifier' => $identifier]);
+        if (null === $event) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('share.html.twig', ['event' => $event]);
     }
 }

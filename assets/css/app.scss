@@ -102,6 +102,13 @@ label.required::after {
   font-size: 0.8em;
 }
 
+.inline-icon {
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 0.2em;
+  vertical-align: center;
+}
+
 .masonry-grid-item,
 .masonry-grid-sizer {
   width: 100%;

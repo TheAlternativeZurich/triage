@@ -41,6 +41,7 @@ class MyTwigExtension extends AbstractExtension
         return [
             new TwigFilter('dateFormat', [$this, 'dateFormatFilter']),
             new TwigFilter('dateTimeFormat', [$this, 'dateTimeFormatFilter']),
+            new TwigFilter('timeFormat', [$this, 'timeFormatFilter']),
             new TwigFilter('booleanFormat', [$this, 'booleanFilter']),
             new TwigFilter('camelCaseToUnderscore', [$this, 'camelCaseToUnderscoreFilter']),
             new TwigFilter('truncate', [$this, 'truncateFilter'], ['needs_environment' => true]),
@@ -56,6 +57,15 @@ class MyTwigExtension extends AbstractExtension
     {
         if ($date instanceof DateTime) {
             return $date->format(DateTimeFormatter::DATE_FORMAT);
+        }
+
+        return '-';
+    }
+
+    public function timeFormatFilter(?DateTime $date): string
+    {
+        if ($date instanceof DateTime) {
+            return $date->format(DateTimeFormatter::TIME_FORMAT);
         }
 
         return '-';

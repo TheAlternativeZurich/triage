@@ -1,45 +1,50 @@
 [
   {
-    "title": "PDF = PestesDateiFormat",
+    "title": "TheAlternative: PDF = PestesDateiFormat",
     "description": "Take a deeper look into how a PDF file is structured, and learn about the pro / const of the file format. As part of this talk, we will look at the PDF and TTF specification and a (unfinished) PDF compiler (=a program that creates PDFs). At the end of this talk, you can create a minimal PDF from scratch in a text editor.",
     "startDate": "2021-04-30T17:00:00",
     "parts": 2,
+    "identifier": "the-alternative-pdf-pestes-datei-format",
     "minRegistrations": 7,
     "experience": "Wrote a small PDF compiler",
     "public": true
   },
   {
-    "title": "web",
+    "title": "TheAlternative: web",
     "description": "This is a crash course to HTML, CSS, JavaScript and PHP; we'll learn some design / user experience on the way. You need no prior knowledge, and need not to be a programmer! After this course, you will be able to create your own simple webpage.",
     "startDate": "2021-04-30T17:00:00",
     "parts": 1,
+    "identifier": "the-alternative-web",
     "minRegistrations": 4,
     "experience": "Published many web applications.",
     "public": false
   },
   {
-    "title": "Privacy?",
-    "description": "What are your facial expression when you sit on the toilet? Where did you skin itch you went to the doctor with? How cringy was the start and end of your last romantic encounter?\n\nPrivacy is a human right. If violated, you are more suspectible to manipulation, self-censoring and will stand out for anything that is \"different\" about you. We will properly motivate privacy, show examples of where Ad-Tech and worse wrecked havoc, read you your rights, and help you to avoid exposing yourself unnecessarily.",
+    "title": "TheAlternative: Privacy?",
+    "description": "What are your facial expression when you sit on the toilet? Where did your skin itch you went to the doctor with? How cringy was the start and end of your last romantic encounter?\n\nPrivacy is a human right. If violated, you are more susceptible to manipulation, self-censoring and will stand out for anything that is \"different\" about you. We will properly motivate privacy, show examples of where Ad-Tech and worse wrecked havoc, read you your rights, and help you to avoid exposing yourself unnecessarily.",
     "startDate": "2021-04-30T17:00:00",
     "parts": 1,
+    "identifier": "the-alternative-privacy",
     "minRegistrations": 1,
     "experience": "Am a privacy freak since many years.",
     "public": true
   },
   {
-    "title": "Linux Toolbox",
+    "title": "TheAlternative: Linux Toolbox",
     "description": "Linux is well-known for being configurable and fitting many different styles of use. But what can you do with it? Our goal in the Linux Toolbox course is to introduce a large range of tools and to teach you how you can profit from them. We'll show you typical tasks that Linux is good at, such as renaming hundreds of files, searching and replacing text, automatic downloading etc.. This way, you'll be able to recognize those tasks in the wild and don't have to do them by hand.\n\nLinux has many useful tools, so we don't intend to cover them all in detail. We'll instead take a sweeping glance to cover as many use cases as possible and provide you with learning resources if you want to delve deeper into a topic. Most of the course will take place on the command line, but no prerequisite knowledge is required.",
     "startDate": "2021-04-16T17:00:00",
     "parts": 2,
+    "identifier": "the-alternative-linux-toolbox",
     "minRegistrations": 0,
     "experience": "Been using Linux since many years.",
     "public": true
   },
   {
-    "title": "Introduction to Linux",
+    "title": "TheAlternative: Introduction to Linux",
     "description": "In this course you will learn about the wide family of free operating systems based on the Linux kernel, some of the most useful software tools available for them, as well as the philosophy that made them so successful.\n\nFind out how easy to use and yet powerful Linux systems are, discover their advantages when compared to other operating systems, and get to understand their basic structure and most important concepts. Furthermore, discover different flavours of Linux and get a feeling for which distribution and desktop environment would be the right match for you.",
     "startDate": "2021-04-14T17:00:00",
     "parts": 2,
+    "identifier": "the-alternative-introduction-to-linux",
     "minRegistrations": 0,
     "experience": "Been using Linux since many years.",
     "public": true

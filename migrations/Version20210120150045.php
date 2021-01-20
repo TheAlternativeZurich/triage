@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210118150817 extends AbstractMigration
+final class Version20210120150045 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -27,7 +27,8 @@ final class Version20210118150817 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_E7927C74A45BB98C ON email (sent_by_id)');
         $this->addSql('CREATE TABLE event (id CHAR(36) NOT NULL --(DC2Type:guid)
         , lecturer_id CHAR(36) DEFAULT NULL --(DC2Type:guid)
-        , experience CLOB NOT NULL, min_registrations INTEGER NOT NULL, public BOOLEAN NOT NULL, created_at DATETIME NOT NULL, last_changed_at DATETIME NOT NULL, name CLOB NOT NULL, description CLOB NOT NULL, start_date DATETIME NOT NULL, parts INTEGER DEFAULT NULL, PRIMARY KEY(id))');
+        , identifier VARCHAR(255) NOT NULL, experience CLOB NOT NULL, min_registrations INTEGER NOT NULL, public BOOLEAN NOT NULL, created_at DATETIME NOT NULL, last_changed_at DATETIME NOT NULL, title CLOB NOT NULL, description CLOB NOT NULL, start_date DATETIME NOT NULL, parts INTEGER DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_3BAE0AA7772E836A ON event (identifier)');
         $this->addSql('CREATE INDEX IDX_3BAE0AA7BA2D8762 ON event (lecturer_id)');
         $this->addSql('CREATE TABLE registration (id CHAR(36) NOT NULL --(DC2Type:guid)
         , event_id CHAR(36) DEFAULT NULL --(DC2Type:guid)

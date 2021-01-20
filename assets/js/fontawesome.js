@@ -10,7 +10,8 @@ import {
   faUserAlt,
   faPassport,
   faMapMarkerAlt,
-  faEnvelopeOpen
+  faEnvelopeOpen,
+  faShare
 } from '@fortawesome/pro-light-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
@@ -23,6 +24,7 @@ library.add(
   faUserAlt,
   faPassport,
   faMapMarkerAlt,
-  faEnvelopeOpen
+  faEnvelopeOpen,
+  faShare
 )
 dom.watch()
