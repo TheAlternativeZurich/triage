@@ -1,6 +1,6 @@
 new:
-  title: 'Create event'
-  description: 'Create your own event.'
+  title: 'Contribute event'
+  description: 'Contribute by holding a talk by yourself.'
   submit: 'Create event'
   success:
     created: 'Created event & notified administrators. You will receive an email as soon as the event is published.'

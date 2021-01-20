@@ -28,6 +28,11 @@ class TriagePurpose
      */
     private $motivation;
 
+    /**
+     * @var string
+     */
+    private $motivationShort;
+
     public function getTitle(): string
     {
         return $this->title;
@@ -56,5 +61,15 @@ class TriagePurpose
     public function setMotivation(string $motivation): void
     {
         $this->motivation = $motivation;
+    }
+
+    public function getMotivationShort(): string
+    {
+        return $this->motivationShort;
+    }
+
+    public function setMotivationShort(string $motivationShort): void
+    {
+        $this->motivationShort = $motivationShort;
     }
 }

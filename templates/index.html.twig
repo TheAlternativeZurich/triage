@@ -40,5 +40,19 @@
                 </div>
             </div>
         {% endfor %}
+
+
+        {% if app.user %}
+            <div class="masonry-grid-item">
+                <div class="content tile">
+                    <h2>{{ triagePurpose.motivationShort }}</h2>
+                    <p>
+                        <a class="btn btn-primary" href="{{ path("event_new") }}">
+                            {{ "new.title"|trans({}, "event") }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
