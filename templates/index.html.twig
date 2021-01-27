@@ -7,10 +7,12 @@
 {% trans_default_domain "index" %}
 
 {% block content %}
+    <figure class="shattering p-2 mt-5 mb-5">
+        {% include "_parts/shattered_logo.html" %}
+    </figure>
+
     <div class="content p-0">
-        <div class="tile">
-            <h1>{{ block('title') }}</h1>
-            <hr/>
+        <div class="container tile mt-5">
             <p class="lead">{{ block('description') }}</p>
         </div>
     </div>

@@ -14,6 +14,7 @@ module.exports = {
   plugins: [
     'vue',
   ],
+  ignorePatterns: ["**/*.min.js", "**/shattering.js"],
   rules: {
   },
 };
