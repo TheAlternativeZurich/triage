@@ -15,6 +15,7 @@ use App\Controller\Base\BaseDoctrineController;
 use App\Entity\Event;
 use App\Entity\Registration;
 use App\Form\Event\EditEventType;
+use App\Form\Event\ModerateEventType;
 use App\Helper\IdentifierHelper;
 use App\Security\Voter\EventVoter;
 use App\Service\ConfigurationService;
@@ -46,15 +47,15 @@ class EventController extends BaseDoctrineController
     }
 
     /**
-     * @Route("/moderate", name="event_moderate")
+     * @Route("/all", name="event_all")
      *
      * @return Response
      */
-    public function moderateAction()
+    public function allAction()
     {
-        $events = $this->getDoctrine()->getRepository(Event::class)->findBy([], ['public' => 'DESC', 'startDate' => 'ASC']);
+        $events = $this->getDoctrine()->getRepository(Event::class)->findBy([], ['startDate' => 'ASC']);
 
-        return $this->render('event/moderate.html.twig', ['events' => $events]);
+        return $this->render('event/all.html.twig', ['events' => $events]);
     }
 
     /**
@@ -162,5 +163,40 @@ class EventController extends BaseDoctrineController
         }
 
         return $this->render('event/edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/moderate/{event}", name="event_moderate")
+     *
+     * @return Response
+     */
+    public function moderateAction(Request $request, Event $event, TranslatorInterface $translator)
+    {
+        $this->denyAccessUnlessGranted(EventVoter::EVENT_MODERATE, $event);
+
+        $form = $this->createForm(ModerateEventType::class, $event);
+        if ($event->isPublic()) {
+            $form->add('unpublish', SubmitType::class, ['translation_domain' => 'event', 'label' => 'moderate.unpublish']);
+        } else {
+            $form->add('publish', SubmitType::class, ['translation_domain' => 'event', 'label' => 'moderate.publish']);
+        }
+        $form->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'moderate.submit']);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->has('unpublish') && $form->get('unpublish')->isClicked()) {
+                $event->setPublic(false);
+            } elseif ($form->has('publish') && $form->get('publish')->isClicked()) {
+                $event->setPublic(true);
+            }
+            $this->fastSave($event);
+
+            $message = $translator->trans('moderate.success.saved', [], 'event');
+            $this->displaySuccess($message);
+
+            return $this->redirectToRoute('event_all');
+        }
+
+        return $this->render('event/moderate.html.twig', ['form' => $form->createView()]);
     }
 }

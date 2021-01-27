@@ -22,8 +22,18 @@ mine:
   registered_events: 'Your registrations'
   no_registrations_yet: 'You are not registered to any event yet.'
 
+all:
+  title: 'All events'
+  description: 'All events created on this platform'
+
 moderate:
-  title: 'Moderate events'
+  title: 'Moderate'
+  description: 'Review content & publish / unpublish'
+  submit: 'Save changes'
+  publish: 'Publish'
+  unpublish: 'Unpublish'
+  success:
+    saved: 'Saved changes.'
 
 event_publish:
   action: "publish"

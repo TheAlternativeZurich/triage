@@ -13,6 +13,7 @@ namespace App\Form\EventTrait;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -26,7 +27,11 @@ class EditEventTraitType extends AbstractType
     {
         $builder->add('title', TextType::class);
         $builder->add('description', TextareaType::class);
-        $builder->add('startDate', DateType::class, ['widget' => 'single_text', 'help' => 'start_date_help']);
+        if ($options['allow_time_edit']) {
+            $builder->add('startDate', DateTimeType::class, ['widget' => 'single_text', 'help' => 'start_date_help']);
+        } else {
+            $builder->add('startDate', DateType::class, ['widget' => 'single_text', 'help' => 'start_date_help']);
+        }
         $builder->add('parts', NumberType::class);
     }
 
@@ -35,6 +40,7 @@ class EditEventTraitType extends AbstractType
         $resolver->setDefaults([
             'translation_domain' => 'trait_event',
             'data_class' => Event::class,
+            'allow_time_edit' => false,
         ]);
     }
 }

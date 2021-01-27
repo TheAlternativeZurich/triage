@@ -17,6 +17,7 @@ use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -46,6 +47,7 @@ class Event extends BaseEntity
      * @var int|null
      *
      * @ORM\Column(type="integer")
+     * @Assert\Range(min="0", max="100")
      */
     private $minRegistrations;
 

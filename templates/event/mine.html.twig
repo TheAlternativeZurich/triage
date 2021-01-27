@@ -40,7 +40,9 @@
                             <span class="text-secondary">{{ event_macros.display_event_datetime(lecture) }}</span>
                         </td>
                         <td>{{ event_macros.display_event_registration_status(lecture) }}</td>
-                        <td>{{ lecture.public|booleanFormat }}</td>
+                        <td>
+                            {{ event_macros.display_event_ispublic_badge(lecture) }}
+                        </td>
                         <td>
                             <a class="btn btn-outline-secondary"
                                href="{{ path("event_edit", {"event": lecture.id}) }}"

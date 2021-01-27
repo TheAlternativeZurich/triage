@@ -1,1 +1,4 @@
+entity:
+  name: 'User'
+
 isAdmin: "is admin"

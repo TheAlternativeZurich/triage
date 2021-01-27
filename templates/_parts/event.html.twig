@@ -10,6 +10,18 @@
     {{ event.startDate|dateFormat }} | {{ event.startDate|timeFormat }} | {{ event.parts }} {{ "parts_pluralization"|trans({'{count}': event.parts}, "trait_event") }}
 {% endmacro %}
 
+{% macro display_event_ispublic_badge(event) %}
+    {% if event.public %}
+        <span class="badge badge-success">
+            {{ "is_public"|trans({}, "entity_event") }}
+        </span>
+    {% else %}
+        <span class="badge badge-danger">
+            {{ "is_not_public"|trans({}, "entity_event") }}
+        </span>
+    {% endif %}
+{% endmacro %}
+
 {% macro display_event_registration(event, break = false) %}
     {% import _self as self %}
     {% if event.registrationForUser(app.user) %}
@@ -28,6 +40,6 @@
 
 {% macro display_event_registration_status(event, explanation = "") %}
     <span class="ml-2 {% if event.sufficientRegistrations %}text-success{% endif %}">
-       {{ event.registrations|length }} / {{ event.minRegistrations }} {{ explanation}}
+       {{ event.registrations|length }} / {{ event.minRegistrations }} {{ explanation }}
     </span>
 {% endmacro %}

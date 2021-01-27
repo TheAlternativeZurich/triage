@@ -21,7 +21,7 @@
                         {{ own_macros.nav_item(path("event_mine"), "mine.title"|trans({}, "event")) }}
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
-                        {{ own_macros.nav_item(path("event_moderate"), "moderate.title"|trans({}, "event")) }}
+                        {{ own_macros.nav_item(path("event_all"), "all.title"|trans({}, "event")) }}
                     {% endif %}
                 </ul>
                 <ul class="navbar-nav">

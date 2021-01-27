@@ -1,0 +1,39 @@
+{% extends "_single_content.html.twig" %}
+{% import '_parts/event.html.twig' as event_macros %}
+
+{% block title %}{{ "all.title"|trans }}{% endblock %}
+{% block description %}{{ "all.description"|trans }}{% endblock %}
+
+{% trans_default_domain "event" %}
+
+{% block single_content %}
+    <table class="table table-hover border-secondary">
+        <thead>
+        <tr>
+            <th>{{ "entity.name"|trans({}, "entity_event") }}</th>
+            <th>{{ "entity.plural"|trans({}, "entity_registration") }}</th>
+            <th>{{ "entity.name"|trans({}, "entity_user") }}</th>
+            <th class="minimal-width"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>
+                    {{ event.title }}<br/>
+                    <span class="text-secondary">{{ event_macros.display_event_datetime(event) }}</span>
+                </td>
+                <td>{{ event_macros.display_event_registration_status(event) }}</td>
+                <td>{{ event.lecturer.email }}</td>
+                <td>
+                    {{ event_macros.display_event_ispublic_badge(event) }} <br/>
+                    <a
+                       href="{{ path("event_moderate", {"event": event.id}) }}">
+                        {{ "moderate.title"|trans }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

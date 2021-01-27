@@ -7,3 +7,6 @@ experience_help: "Please refer to past projects / experiences you have had with 
 
 min_registrations: 'Minimal registrations'
 min_registrations_help: 'You may set a minimal number of registrations. The event is then only organised if this number is surpassed before your presentation.'
+
+is_public: 'published'
+is_not_public: 'hidden'
