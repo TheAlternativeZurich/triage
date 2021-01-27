@@ -7,8 +7,8 @@ require('./libs/TweenMax.min.js')
 
 var tl = new TimelineMax()
 var path = '.shattering svg *'
-var stagger_val = 0.0125
-var duration = 2
+var stagger_val = 0.01
+var duration = 1
 
 $.each($(path), function (i, el) {
   tl.set($(this), {
