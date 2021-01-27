@@ -2,9 +2,11 @@ new:
   title: 'Contribute event'
   again_title: 'Contribute another event'
   description: 'Contribute by holding a talk by yourself.'
+  event_window: 'Event window'
   submit: 'Create event'
   success:
     created: 'Created event & notified administrators. You will receive an email as soon as the event is published.'
+  questions: 'Questions, doubts, special requests?'
 
 edit:
   title: 'Edit event'

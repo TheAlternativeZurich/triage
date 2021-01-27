@@ -42,6 +42,10 @@ class EventVoter extends Voter
             return false;
         }
 
+        if (in_array($attribute, [self::EVENT_CREATE, self::EVENT_MODERATE])) {
+            return true;
+        }
+
         return $subject instanceof Event;
     }
 

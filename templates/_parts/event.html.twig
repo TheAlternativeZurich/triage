@@ -3,11 +3,11 @@
     -
     {{ event.startDate|timeFormat }}
     -
-    {{ event.parts }} {{ "event.parts"|trans({}, "entity_event") }}
+    {{ "parts_pluralization"|trans({'{count}': event.parts}, "trait_event") }}
 {% endmacro %}
 
 {% macro display_event_datetime_inline(event) %}
-    {{ event.startDate|dateFormat }} | {{ event.startDate|timeFormat }} | {{ event.parts }} {{ "event.parts"|trans({}, "entity_event") }}
+    {{ event.startDate|dateFormat }} | {{ event.startDate|timeFormat }} | {{ event.parts }} {{ "parts_pluralization"|trans({'{count}': event.parts}, "trait_event") }}
 {% endmacro %}
 
 {% macro display_event_registration(event, break = false) %}

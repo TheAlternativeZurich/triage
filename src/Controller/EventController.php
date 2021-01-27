@@ -15,9 +15,10 @@ use App\Controller\Base\BaseDoctrineController;
 use App\Entity\Event;
 use App\Entity\Registration;
 use App\Form\Event\EditEventType;
+use App\Helper\IdentifierHelper;
 use App\Security\Voter\EventVoter;
 use App\Service\ConfigurationService;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use App\Service\Interfaces\ConfigurationServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -102,16 +103,30 @@ class EventController extends BaseDoctrineController
      *
      * @return Response
      */
-    public function newAction(Request $request, TranslatorInterface $translator)
+    public function newAction(Request $request, TranslatorInterface $translator, ConfigurationServiceInterface $configurationService)
     {
         $this->denyAccessUnlessGranted(EventVoter::EVENT_CREATE);
 
+        $triagePurpose = $configurationService->getTriagePurpose();
+        $randomTimestamp = mt_rand($triagePurpose->getStartDate()->getTimestamp(), $triagePurpose->getEndDate()->getTimestamp());
+        $proposedDate = new \DateTime();
+        $proposedDate->setTimestamp($randomTimestamp);
+        $proposedDate->setTime(0, 0);
+
         $event = new Event();
+        $event->setLecturer($this->getUser());
+        $event->setMinRegistrations(0);
+        $event->setStartDate($proposedDate);
+
         $form = $this->createForm(EditEventType::class, $event);
         $form->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'new.submit']);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $identifier = IdentifierHelper::getHumanReadableIdentifier($event->getTitle());
+            $event->setIdentifier($identifier);
+            $event->getStartDate()->setTime(17, 00);
+
             $this->fastSave($event);
 
             $message = $translator->trans('new.success.created', [], 'event');
@@ -120,7 +135,7 @@ class EventController extends BaseDoctrineController
             return $this->redirectToRoute('index');
         }
 
-        return $this->render('event/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('event/new.html.twig', ['form' => $form->createView(), 'triagePurpose' => $triagePurpose]);
     }
 
     /**
@@ -132,25 +147,18 @@ class EventController extends BaseDoctrineController
     {
         $this->denyAccessUnlessGranted(EventVoter::EVENT_EDIT, $event);
 
-        $event = new Event();
         $form = $this->createForm(EditEventType::class, $event);
-        if ($this->getUser()->isAdmin()) {
-            $form->add('public', CheckboxType::class, ['required' => false]);
-        }
-        $form->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'new.submit']);
+        $form->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'edit.submit']);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $event->getStartDate()->setTime(17, 00);
             $this->fastSave($event);
 
             $message = $translator->trans('edit.success.edited', [], 'event');
             $this->displaySuccess($message);
 
-            if ($event->getLecturer() === $this->getUser()) {
-                return $this->redirectToRoute('event_mine');
-            } else {
-                return $this->redirectToRoute('event_moderate');
-            }
+            return $this->redirectToRoute('event_mine');
         }
 
         return $this->render('event/edit.html.twig', ['form' => $form->createView()]);

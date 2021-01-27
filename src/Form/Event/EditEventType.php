@@ -12,6 +12,7 @@
 namespace App\Form\Event;
 
 use App\Form\EventTrait\EditEventTraitType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,8 +20,9 @@ class EditEventType extends AbstractEventType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('event', EditEventTraitType::class, ['inherit_data' => true]);
+        $builder->add('event', EditEventTraitType::class, ['inherit_data' => true, 'label' => false]);
 
-        $builder->add('experience', TextareaType::class);
+        $builder->add('minRegistrations', NumberType::class, ['help' => 'min_registrations_help']);
+        $builder->add('experience', TextareaType::class, ['help' => 'experience_help']);
     }
 }

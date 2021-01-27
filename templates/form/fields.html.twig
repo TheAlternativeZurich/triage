@@ -32,7 +32,7 @@
 {% block edit_event_trait_widget %}
     {% import _self as own_macros %}
 
-    {{ form_row(form.name) }}
+    {{ form_row(form.title) }}
     {{ form_row(form.description) }}
 
     <div class="row">
@@ -44,8 +44,6 @@
         </div>
     </div>
 
-
-
 {% endblock %}
 
 {% block edit_event_widget %}
@@ -54,6 +52,8 @@
     {{ form_row(form.event) }}
 
     <hr/>
+
+    {{ form_row(form.minRegistrations) }}
 
     {{ form_row(form.experience) }}
 {% endblock %}
