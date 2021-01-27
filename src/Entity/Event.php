@@ -17,6 +17,7 @@ use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -46,6 +47,7 @@ class Event extends BaseEntity
      * @var int|null
      *
      * @ORM\Column(type="integer")
+     * @Assert\Range(min="0", max="100")
      */
     private $minRegistrations;
 
@@ -55,6 +57,20 @@ class Event extends BaseEntity
      * @ORM\Column(type="boolean")
      */
     private $public = false;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="datetime", nullable=true, options={"default" : null})
+     */
+    private $publicNotificationSent;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="datetime", nullable=true, options={"default" : null})
+     */
+    private $sufficientRegistrationsNotificationSent;
 
     /**
      * @var User|null
@@ -96,6 +112,16 @@ class Event extends BaseEntity
         $this->experience = $experience;
     }
 
+    public function getMinRegistrations(): ?int
+    {
+        return $this->minRegistrations;
+    }
+
+    public function setMinRegistrations(?int $minRegistrations): void
+    {
+        $this->minRegistrations = $minRegistrations;
+    }
+
     public function isPublic(): bool
     {
         return $this->public;
@@ -106,14 +132,24 @@ class Event extends BaseEntity
         $this->public = $public;
     }
 
-    public function getMinRegistrations(): ?int
+    public function getPublicNotificationSent(): ?\DateTime
     {
-        return $this->minRegistrations;
+        return $this->publicNotificationSent;
     }
 
-    public function setMinRegistrations(?int $minRegistrations): void
+    public function setPublicNotificationSent(?\DateTime $publicNotificationSent): void
     {
-        $this->minRegistrations = $minRegistrations;
+        $this->publicNotificationSent = $publicNotificationSent;
+    }
+
+    public function getSufficientRegistrationsNotificationSent(): ?\DateTime
+    {
+        return $this->sufficientRegistrationsNotificationSent;
+    }
+
+    public function setSufficientRegistrationsNotificationSent(?\DateTime $sufficientRegistrationsNotificationSent): void
+    {
+        $this->sufficientRegistrationsNotificationSent = $sufficientRegistrationsNotificationSent;
     }
 
     public function getLecturer(): ?User

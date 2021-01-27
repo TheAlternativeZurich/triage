@@ -28,11 +28,15 @@ $(document)
 
     if ($('.masonry-grid').length) {
       // noinspection JSUnusedLocalSymbols
-      const masonry = new Masonry('.masonry-grid', { // eslint-disable-line no-unused-vars
+      const masonry = new Masonry('.masonry-grid', {
         columnWidth: '.masonry-grid-sizer',
         itemSelector: '.masonry-grid-item',
         percentPosition: true
       })
+
+      window.setTimeout(function () {
+        masonry('layout')
+      }, 1000)
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -88,12 +88,8 @@ class EmailService implements EmailServiceInterface
         $entity = Email::create(Email::TYPE_REGISTER_CONFIRM, $user, $link);
         $subject = $this->translator->trans('register_confirm.subject', ['%page%' => $this->getCurrentPage()], 'email');
 
-        $message = (new TemplatedEmail())
+        $message = $this->createTemplatedEmail($user)
             ->subject($subject)
-            ->from($this->mailerFromEmail)
-            ->to($user->getEmail())
-            ->replyTo($this->supportEmail)
-            ->returnPath($this->supportEmail)
             ->textTemplate('email/register_confirm.txt.twig')
             ->htmlTemplate('email/register_confirm.html.twig')
             ->context($entity->getContext());
@@ -107,12 +103,8 @@ class EmailService implements EmailServiceInterface
         $entity = Email::create(Email::TYPE_RECOVER_CONFIRM, $user, $link);
         $subject = $this->translator->trans('recover_confirm.subject', ['%page%' => $this->getCurrentPage()], 'email');
 
-        $message = (new TemplatedEmail())
+        $message = $this->createTemplatedEmail($user)
             ->subject($subject)
-            ->from($this->mailerFromEmail)
-            ->to($user->getEmail())
-            ->replyTo($this->supportEmail)
-            ->returnPath($this->supportEmail)
             ->textTemplate('email/recover_confirm.txt.twig')
             ->htmlTemplate('email/recover_confirm.html.twig')
             ->context($entity->getContext());
@@ -130,12 +122,8 @@ class EmailService implements EmailServiceInterface
             $entity = Email::create(Email::TYPE_EVENT_CREATED_NOTIFICATION, $admin, $link);
             $subject = $this->translator->trans('event_created.subject', ['%page%' => $this->getCurrentPage()], 'email');
 
-            $message = (new TemplatedEmail())
+            $message = $this->createTemplatedEmail($admin)
                 ->subject($subject)
-                ->from($this->mailerFromEmail)
-                ->to($admin->getEmail())
-                ->replyTo($this->supportEmail)
-                ->returnPath($this->supportEmail)
                 ->textTemplate('email/event_created.txt.twig')
                 ->htmlTemplate('email/event_created.html.twig')
                 ->context($entity->getContext());
@@ -148,22 +136,43 @@ class EmailService implements EmailServiceInterface
 
     public function sendEventPublicNotification(Event $event): bool
     {
-        $link = $this->router->generate('event_view', ['event' => $event->getId()]);
+        $link = $this->router->generate('event_share', ['identifier' => $event->getIdentifier()]);
 
         $entity = Email::create(Email::TYPE_EVENT_PUBLIC_NOTIFICATION, $event->getLecturer(), $link);
         $subject = $this->translator->trans('event_public.subject', ['%page%' => $this->getCurrentPage()], 'email');
 
-        $message = (new TemplatedEmail())
+        $message = $this->createTemplatedEmail($event->getLecturer())
             ->subject($subject)
-            ->from($this->mailerFromEmail)
-            ->to($event->getLecturer()->getEmail())
-            ->replyTo($this->supportEmail)
-            ->returnPath($this->supportEmail)
             ->textTemplate('email/event_public.txt.twig')
             ->htmlTemplate('email/event_public.html.twig')
             ->context($entity->getContext());
 
         return $this->sendAndStoreEMail($message, $entity);
+    }
+
+    public function sendEventSufficientRegistrationsNotification(Event $event): bool
+    {
+        $link = $this->router->generate('event_share', ['identifier' => $event->getIdentifier()]);
+
+        $entity = Email::create(Email::TYPE_EVENT_SUFFICIENT_REGISTRATIONS_NOTIFICATION, $event->getLecturer(), $link);
+        $subject = $this->translator->trans('event_sufficient_registrations.subject', ['%page%' => $this->getCurrentPage()], 'email');
+
+        $message = $this->createTemplatedEmail($event->getLecturer())
+            ->subject($subject)
+            ->textTemplate('email/event_sufficient_registrations.txt.twig')
+            ->htmlTemplate('email/event_sufficient_registrations.html.twig')
+            ->context($entity->getContext());
+
+        return $this->sendAndStoreEMail($message, $entity);
+    }
+
+    private function createTemplatedEmail(User $user)
+    {
+        return (new TemplatedEmail())
+            ->from($this->mailerFromEmail)
+            ->to($user->getEmail())
+            ->replyTo($this->supportEmail)
+            ->returnPath($this->supportEmail);
     }
 
     private function getCurrentPage()

@@ -1,9 +1,12 @@
 new:
   title: 'Contribute event'
+  again_title: 'Contribute another event'
   description: 'Contribute by holding a talk by yourself.'
+  event_window: 'Event window'
   submit: 'Create event'
   success:
     created: 'Created event & notified administrators. You will receive an email as soon as the event is published.'
+  questions: 'Questions, doubts, special requests?'
 
 edit:
   title: 'Edit event'
@@ -14,9 +17,23 @@ edit:
 
 mine:
   title: 'My events'
+  description: 'Your events & registrations'
+  constributing_events: 'Your contributions'
+  registered_events: 'Your registrations'
+  no_registrations_yet: 'You are not registered to any event yet.'
+
+all:
+  title: 'All events'
+  description: 'All events created on this platform'
 
 moderate:
-  title: 'Moderate events'
+  title: 'Moderate'
+  description: 'Review content & publish / unpublish'
+  submit: 'Save changes'
+  publish: 'Publish'
+  unpublish: 'Unpublish'
+  success:
+    saved: 'Saved changes.'
 
 event_publish:
   action: "publish"

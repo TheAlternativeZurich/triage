@@ -9,30 +9,10 @@
     </div>
 {% endblock %}
 
-{% macro form_row_buttons(form) %}
-    <div class="row mt-4">
-        <div class="col">
-            {% if form.submit is defined %}
-                {% if form.submit_and_lock is defined or form.submit_and_unlock is defined %}
-                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-outline-primary'}}) }}
-                {% else %}
-                    {{ form_widget(form.submit) }}
-                {% endif %}
-            {% endif %}
-            {% if form.submit_and_lock is defined %}
-                {{ form_widget(form.submit_and_lock, {'attr': {'class': 'btn btn-success'}}) }}
-            {% endif %}
-            {% if form.submit_and_unlock is defined %}
-                {{ form_widget(form.submit_and_unlock, {'attr': {'class': 'btn btn-warning'}}) }}
-            {% endif %}
-        </div>
-    </div>
-{% endmacro %}
-
 {% block edit_event_trait_widget %}
     {% import _self as own_macros %}
 
-    {{ form_row(form.name) }}
+    {{ form_row(form.title) }}
     {{ form_row(form.description) }}
 
     <div class="row">
@@ -44,8 +24,6 @@
         </div>
     </div>
 
-
-
 {% endblock %}
 
 {% block edit_event_widget %}
@@ -55,5 +33,41 @@
 
     <hr/>
 
+    {{ form_row(form.minRegistrations) }}
+
     {{ form_row(form.experience) }}
+{% endblock %}
+
+{% block moderate_event_widget %}
+    {% import _self as own_macros %}
+
+    {{ form_row(form.event) }}
+
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.identifier) }}
+        </div>
+    </div>
+
+    <hr/>
+
+    {{ form_row(form.minRegistrations) }}
+
+    {{ form_row(form.experience) }}
+
+
+    <div class="row mt-4">
+        <div class="col">
+            {% if form.submit is defined %}
+                {{ form_widget(form.submit) }}
+            {% endif %}
+            {% if form.unpublish is defined %}
+                {{ form_widget(form.unpublish, {'attr': {'class': 'btn btn-danger'}}) }}
+            {% endif %}
+            {% if form.publish is defined %}
+                {{ form_widget(form.publish, {'attr': {'class': 'btn btn-success'}}) }}
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

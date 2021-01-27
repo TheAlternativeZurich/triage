@@ -31,6 +31,7 @@ class Email extends BaseEntity
     public const TYPE_RECOVER_CONFIRM = 1;
     public const TYPE_EVENT_CREATED_NOTIFICATION = 2;
     public const TYPE_EVENT_PUBLIC_NOTIFICATION = 3;
+    public const TYPE_EVENT_SUFFICIENT_REGISTRATIONS_NOTIFICATION = 4;
 
     /**
      * @var string
