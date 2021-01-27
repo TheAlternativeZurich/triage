@@ -7,10 +7,9 @@
 {% trans_default_domain "index" %}
 
 {% block content %}
-    <div class="content p-0">
-        <div class="tile">
-            <h1>{{ block('title') }}</h1>
-            <hr/>
+    <div class="content p-0 mt-5">
+        <h1 class="text-center">{{ block('title') }}</h1>
+        <div class="container tile mt-5">
             <p class="lead">{{ block('description') }}</p>
         </div>
     </div>
