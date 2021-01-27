@@ -1,0 +1,9 @@
+{% trans_default_domain "email" %}
+
+{% block message %}
+{{ "event_sufficient_registrations.message"|trans({"%page%": app.request.httpHost}) }}
+{% endblock %}
+
+{% block link_text %}
+{{ "event_sufficient_registrations.view_link"|trans }}
+{% endblock %}

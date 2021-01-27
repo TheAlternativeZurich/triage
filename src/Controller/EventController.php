@@ -20,6 +20,7 @@ use App\Helper\IdentifierHelper;
 use App\Security\Voter\EventVoter;
 use App\Service\ConfigurationService;
 use App\Service\Interfaces\ConfigurationServiceInterface;
+use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,7 +64,7 @@ class EventController extends BaseDoctrineController
      *
      * @return Response
      */
-    public function registerAction(Event $event, TranslatorInterface $translator)
+    public function registerAction(Event $event, TranslatorInterface $translator, EmailServiceInterface $emailService)
     {
         $existingRegistration = $event->getRegistrationForUser($this->getUser());
         if ($existingRegistration) {
@@ -71,10 +72,17 @@ class EventController extends BaseDoctrineController
         }
 
         $registration = Registration::createFromUser($event, $this->getUser());
+        $event->getRegistrations()->add($registration);
         $this->fastSave($registration);
 
         $message = $translator->trans('register.success.registered', [], 'event');
         $this->displaySuccess($message);
+
+        if ($event->getMinRegistrations() > 0 && $event->getMinRegistrations() >= $event->getRegistrations()->count() && !$event->getSufficientRegistrationsNotificationSent()) {
+            $emailService->sendEventSufficientRegistrationsNotification($event);
+            $event->setSufficientRegistrationsNotificationSent(new \DateTime());
+            $this->fastSave($event);
+        }
 
         return $this->redirectToRoute('index');
     }
@@ -104,7 +112,7 @@ class EventController extends BaseDoctrineController
      *
      * @return Response
      */
-    public function newAction(Request $request, TranslatorInterface $translator, ConfigurationServiceInterface $configurationService)
+    public function newAction(Request $request, TranslatorInterface $translator, ConfigurationServiceInterface $configurationService, EmailServiceInterface $emailService)
     {
         $this->denyAccessUnlessGranted(EventVoter::EVENT_CREATE);
 
@@ -132,6 +140,8 @@ class EventController extends BaseDoctrineController
 
             $message = $translator->trans('new.success.created', [], 'event');
             $this->displaySuccess($message);
+
+            $emailService->sendEventCreatedNotification($event);
 
             return $this->redirectToRoute('index');
         }
@@ -170,7 +180,7 @@ class EventController extends BaseDoctrineController
      *
      * @return Response
      */
-    public function moderateAction(Request $request, Event $event, TranslatorInterface $translator)
+    public function moderateAction(Request $request, Event $event, TranslatorInterface $translator, EmailServiceInterface $emailService)
     {
         $this->denyAccessUnlessGranted(EventVoter::EVENT_MODERATE, $event);
 
@@ -188,6 +198,10 @@ class EventController extends BaseDoctrineController
                 $event->setPublic(false);
             } elseif ($form->has('publish') && $form->get('publish')->isClicked()) {
                 $event->setPublic(true);
+                if (!$event->getPublicNotificationSent()) {
+                    $emailService->sendEventPublicNotification($event);
+                    $event->setPublicNotificationSent(new \DateTime());
+                }
             }
             $this->fastSave($event);
 

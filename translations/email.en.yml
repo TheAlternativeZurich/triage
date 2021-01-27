@@ -16,3 +16,18 @@ recover_confirm:
 view_online:
   title: 'Read E-Mail'
   description: 'Read E-Mail in the original layout.'
+
+event_created:
+  subject: 'New event created on %page%'
+  message: 'A new event has been created, and awaits approval to publish.'
+  moderate_link: 'Moderate'
+
+event_public:
+  subject: 'Your event has been published on %page%'
+  message: 'Your event has been published, and registration has been opened! We will include it in our next marketing badge. You may also want to share it in your network :)'
+  view_link: 'View'
+
+event_sufficient_registrations:
+  subject: 'Sufficient registrations reached for your event on %page%'
+  message: 'Congratulations! Your event has just surpassed the minimal number of registrations required. We are looking forward to it!'
+  view_link: 'View'
