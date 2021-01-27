@@ -1,5 +1,6 @@
 new:
   title: 'Contribute event'
+  again_title: 'Contribute another event'
   description: 'Contribute by holding a talk by yourself.'
   submit: 'Create event'
   success:
@@ -14,6 +15,10 @@ edit:
 
 mine:
   title: 'My events'
+  description: 'Your events & registrations'
+  constributing_events: 'Your contributions'
+  registered_events: 'Your registrations'
+  no_registrations_yet: 'You are not registered to any event yet.'
 
 moderate:
   title: 'Moderate events'

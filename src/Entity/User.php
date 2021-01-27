@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class User extends BaseEntity implements UserInterface
@@ -53,6 +53,7 @@ class User extends BaseEntity implements UserInterface
      * @var Event[]|ArrayCollection
      *
      * @ORM\OneToMany (targetEntity="App\Entity\Event", mappedBy="lecturer")
+     * @ORM\OrderBy({"startDate" = "ASC"})
      */
     private $lectures;
 

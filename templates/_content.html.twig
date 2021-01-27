@@ -17,6 +17,9 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
                     {{ own_macros.nav_item(path("index"), "index.title"|trans({}, "index")) }}
+                    {% if is_granted('ROLE_USER') %}
+                        {{ own_macros.nav_item(path("event_mine"), "mine.title"|trans({}, "event")) }}
+                    {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                         {{ own_macros.nav_item(path("event_moderate"), "moderate.title"|trans({}, "event")) }}
                     {% endif %}
@@ -27,7 +30,9 @@
                             <i class="fal fa-envelope-open"></i>
                         </a>
                     {% endblock %}
-                    {% if app.user is not null %}
+                    {% if app.user is null %}
+                        {{ own_macros.nav_item(path("login"), "login.title"|trans({}, "security")) }}
+                    {% else %}
                         {{ own_macros.nav_item(path("logout"), "logout.title"|trans({}, "security")) }}
                     {% endif %}
                 </ul>

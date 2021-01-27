@@ -16,6 +16,8 @@ use App\Entity\Event;
 use App\Entity\Registration;
 use App\Form\Event\EditEventType;
 use App\Security\Voter\EventVoter;
+use App\Service\ConfigurationService;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,15 +35,17 @@ class EventController extends BaseDoctrineController
      *
      * @return Response
      */
-    public function mineAction()
+    public function mineAction(ConfigurationService $configurationService)
     {
-        $registrations = $this->getUser()->getRegistrations();
+        $registrations = $this->getDoctrine()->getRepository(Registration::class)->findOrderedByUser($this->getUser());
+        $lectures = $this->getUser()->getLectures();
+        $triagePurpose = $configurationService->getTriagePurpose();
 
-        return $this->render('event/mine.html.twig', ['events' => $registrations]);
+        return $this->render('event/mine.html.twig', ['registrations' => $registrations, 'lectures' => $lectures, 'triagePurpose' => $triagePurpose]);
     }
 
     /**
-     * @Route("/all", name="event_moderate")
+     * @Route("/moderate", name="event_moderate")
      *
      * @return Response
      */
@@ -117,5 +121,38 @@ class EventController extends BaseDoctrineController
         }
 
         return $this->render('event/new.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/edit/{event}", name="event_edit")
+     *
+     * @return Response
+     */
+    public function editAction(Request $request, Event $event, TranslatorInterface $translator)
+    {
+        $this->denyAccessUnlessGranted(EventVoter::EVENT_EDIT, $event);
+
+        $event = new Event();
+        $form = $this->createForm(EditEventType::class, $event);
+        if ($this->getUser()->isAdmin()) {
+            $form->add('public', CheckboxType::class, ['required' => false]);
+        }
+        $form->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'new.submit']);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->fastSave($event);
+
+            $message = $translator->trans('edit.success.edited', [], 'event');
+            $this->displaySuccess($message);
+
+            if ($event->getLecturer() === $this->getUser()) {
+                return $this->redirectToRoute('event_mine');
+            } else {
+                return $this->redirectToRoute('event_moderate');
+            }
+        }
+
+        return $this->render('event/edit.html.twig', ['form' => $form->createView()]);
     }
 }

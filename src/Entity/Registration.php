@@ -17,7 +17,7 @@ use App\Entity\Traits\TimeTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\RegistrationRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Registration extends BaseEntity

@@ -5,3 +5,4 @@ name: "Name"
 description: "Description"
 start_date: "Date (begin: 17:00)"
 parts: "Parts (each 45 minutes)"
+public: 'Public'
