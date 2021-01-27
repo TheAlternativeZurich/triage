@@ -1,0 +1,19 @@
+/**
+ * Code copied from https://codepen.io/ARS/pen/pjypwd
+ * slight adaptations
+ */
+
+.shattering svg {
+  opacity: 0;
+  overflow: visible;
+}
+
+.shattering.show svg {
+  opacity: 1;
+}
+
+.shattering svg > * {
+  fill: #1c1c1c;
+  stroke: #1c1c1c;
+  stroke-width: 0.85px;
+}

@@ -1,5 +1,6 @@
 import '../css/app.scss'
 import './fontawesome'
+import './shattering'
 
 const $ = require('jquery')
 require('bootstrap')
@@ -35,7 +36,7 @@ $(document)
       })
 
       window.setTimeout(function () {
-        masonry('layout')
+        masonry.resize()
       }, 1000)
     }
 
