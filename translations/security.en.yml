@@ -8,7 +8,7 @@ login:
     login_failed: 'Login failed.'
     email_not_found: 'E-Mail not found.'
     password_wrong: 'Password wrong.'
-    account_disabled: 'This Account is deactivated.'
+    account_disabled: 'This Account is deactivated. Active it using the link from the registration E-Mail, or by resetting your password.'
 
 register:
   title: 'Register'
