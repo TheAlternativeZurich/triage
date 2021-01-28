@@ -55,3 +55,16 @@ deregister:
   title: "Deregister"
   success:
     deregistered: 'You have been unregistered.'
+
+registrations:
+  title: 'Registrations'
+  description: 'View who has already registered'
+  form:
+    message: 'E-Mail'
+    message_help: 'E-Mail will be sent to all participants and yourself (Bcc).'
+    submit: 'Send E-Mail to all participants'
+  success:
+    sent: 'E-Mail sent successfully'
+
+  no_registrations_yet: 'No registrations yet.'
+

@@ -40,9 +40,7 @@
                             <span class="text-secondary">{{ event_macros.display_event_datetime(lecture) }}</span>
                         </td>
                         <td>
-                            <span class="ml-2 {% if lecture.sufficientRegistrations %}text-success{% endif %}">
-                               {{ lecture.registrations|length }} / {{ lecture.minRegistrations }}
-                            </span>
+                            {{ event_macros.display_event_registration_count(lecture) }}
                         </td>
                         <td>
                             {{ event_macros.display_event_ispublic_badge(lecture) }}

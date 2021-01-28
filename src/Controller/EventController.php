@@ -22,6 +22,7 @@ use App\Service\ConfigurationService;
 use App\Service\Interfaces\ConfigurationServiceInterface;
 use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -212,5 +213,34 @@ class EventController extends BaseDoctrineController
         }
 
         return $this->render('event/moderate.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/registrations/{event}", name="event_registrations")
+     *
+     * @return Response
+     */
+    public function registrationsAction(Request $request, Event $event, TranslatorInterface $translator, EmailServiceInterface $emailService)
+    {
+        $this->denyAccessUnlessGranted(EventVoter::EVENT_MODERATE, $event);
+
+        $form = $this->createFormBuilder()
+            ->add('message', TextareaType::class, ['translation_domain' => 'event', 'label' => 'registrations.form.message', 'help' => 'registrations.form.message_help'])
+            ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'registrations.form.submit'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message = $form->get('message')->getData();
+
+            if ($emailService->sendEventNotification($event, $this->getUser(), $message)) {
+                $message = $translator->trans('registrations.success.sent', [], 'event');
+                $this->displaySuccess($message);
+            }
+
+            return $this->redirectToRoute('event_all');
+        }
+
+        return $this->render('event/registrations.html.twig', ['form' => $form->createView(), 'registrations' => $event->getRegistrations()]);
     }
 }

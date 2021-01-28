@@ -44,3 +44,8 @@
     {% endif %}
 {% endmacro %}
 
+{% macro display_event_registration_count(event) %}
+    <span class="{% if event.sufficientRegistrations %}text-success{% endif %}">
+       {{ event.registrations|length }} / {{ event.minRegistrations }}
+    </span>
+{% endmacro %}

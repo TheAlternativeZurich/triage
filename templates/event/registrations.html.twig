@@ -1,0 +1,40 @@
+{% extends "_single_content.html.twig" %}
+
+{% block title %}{{ "registrations.title"|trans }}{% endblock %}
+{% block description %}{{ "registrations.description"|trans }}{% endblock %}
+
+{% trans_default_domain "event" %}
+
+{% block single_content %}
+    <div class="row">
+        <div class="col-md-6">
+            {% if registrations|length == 0 %}
+                <p class="alert alert-info">{{ "registrations.no_registrations_yet"|trans }}</p>
+            {% else %}
+                <table class="table table-hover border-secondary">
+                    <thead>
+                    <tr>
+                        <th>{{ "email"|trans({}, "trait_user") }}</th>
+                        <th>{{ "createdAt"|trans({}, "trait_time") }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for registration in registrations %}
+                        <tr>
+                            <td>
+                                {{ registration.user.email }}
+                            </td>
+                            <td>
+                                {{ registration.createdAt|dateTimeFormat }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}

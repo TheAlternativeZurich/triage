@@ -20,6 +20,8 @@
                         {% set path = 'email/event_public_content.twig' %}
                     {% elseif emailType == 4 %}
                         {% set path = 'email/event_sufficient_registrations_content.twig' %}
+                    {% elseif emailType == 5 %}
+                        {% set path = 'email/event_content.twig' %}
                     {% endif %}
                     <p>{{ block('message', path) }}</p>
                     <spacer size="15"></spacer>

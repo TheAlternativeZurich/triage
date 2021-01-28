@@ -25,4 +25,6 @@ interface EmailServiceInterface
     public function sendEventPublicNotification(Event $event): bool;
 
     public function sendEventSufficientRegistrationsNotification(Event $event): bool;
+
+    public function sendEventNotification(Event $event, User $getUser, string $message);
 }
