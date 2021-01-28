@@ -159,6 +159,7 @@ class EmailService implements EmailServiceInterface
 
         $message = $this->createTemplatedEmailToUser($event->getLecturer())
             ->subject($subject)
+            ->bcc($this->supportEmail)
             ->textTemplate('email/event_sufficient_registrations.txt.twig')
             ->htmlTemplate('email/event_sufficient_registrations.html.twig')
             ->context($entity->getContext());
