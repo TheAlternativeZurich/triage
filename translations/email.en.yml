@@ -31,3 +31,7 @@ event_sufficient_registrations:
   subject: 'Sufficient registrations reached for your event on %page%'
   message: 'Congratulations! Your event has just surpassed the minimal number of registrations required. We are looking forward to it!'
   view_link: 'View'
+
+event:
+  subject: 'Information for %event%'
+  view_link: 'View event'

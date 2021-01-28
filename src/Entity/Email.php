@@ -32,6 +32,7 @@ class Email extends BaseEntity
     public const TYPE_EVENT_CREATED_NOTIFICATION = 2;
     public const TYPE_EVENT_PUBLIC_NOTIFICATION = 3;
     public const TYPE_EVENT_SUFFICIENT_REGISTRATIONS_NOTIFICATION = 4;
+    public const TYPE_EVENT_NOTIFICATION = 5;
 
     /**
      * @var string
@@ -55,6 +56,13 @@ class Email extends BaseEntity
     private $link;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $body;
+
+    /**
      * @var DateTime
      *
      * @ORM\Column(type="datetime")
@@ -75,13 +83,14 @@ class Email extends BaseEntity
      */
     private $readAt;
 
-    public static function create(int $emailType, User $sentBy, ?string $link)
+    public static function create(int $emailType, User $sentBy, ?string $link, ?string $body = null)
     {
         $email = new Email();
 
         $email->identifier = UuidV4::v4();
         $email->type = $emailType;
         $email->link = $link;
+        $email->body = $body;
         $email->sentBy = $sentBy;
         $email->sentDateTime = new \DateTime();
 
@@ -108,6 +117,11 @@ class Email extends BaseEntity
         return $this->link;
     }
 
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
     public function getSentDateTime(): DateTime
     {
         return $this->sentDateTime;
@@ -125,6 +139,6 @@ class Email extends BaseEntity
 
     public function getContext(): array
     {
-        return ['sentBy' => $this->sentBy, 'identifier' => $this->identifier, 'emailType' => $this->type, 'link' => $this->link];
+        return ['sentBy' => $this->sentBy, 'identifier' => $this->identifier, 'emailType' => $this->type, 'link' => $this->link, 'body' => $this->body];
     }
 }

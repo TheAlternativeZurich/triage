@@ -33,13 +33,19 @@
         </a>
     {% endif %}
     {% if break %}<br>{% endif %}
-    {% if event.minRegistrations > 0 %}
-        {{ self.display_event_registration_status(event, "index.required_registrations"|trans({}, "index")) }}
+    {% if event.sufficientRegistrations %}
+        <span class="ml-2 badge badge-success">
+            {{ "index.confirmed"|trans({}, "index") }}
+        </span>
+    {% else %}
+        <span class="ml-2">
+            {{ event.missingRegistrations }} {{ "index.missing_registrations"|trans({}, "index") }}
+        </span>
     {% endif %}
 {% endmacro %}
 
-{% macro display_event_registration_status(event, explanation = "") %}
-    <span class="ml-2 {% if event.sufficientRegistrations %}text-success{% endif %}">
-       {{ event.registrations|length }} / {{ event.minRegistrations }} {{ explanation }}
+{% macro display_event_registration_count(event) %}
+    <span class="{% if event.sufficientRegistrations %}text-success{% endif %}">
+       {{ event.registrations|length }} / {{ event.minRegistrations }}
     </span>
 {% endmacro %}

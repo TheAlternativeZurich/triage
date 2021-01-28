@@ -213,6 +213,7 @@ class SecurityController extends BaseDoctrineController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $this->ensurePasswordsConformity($form, $user, $translator)) {
+            $user->setIsEnabled(true);
             $user->generateAuthenticationHash();
             $this->fastSave($user);
 

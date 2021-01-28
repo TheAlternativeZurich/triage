@@ -39,7 +39,9 @@
                             {{ lecture.title }}<br/>
                             <span class="text-secondary">{{ event_macros.display_event_datetime(lecture) }}</span>
                         </td>
-                        <td>{{ event_macros.display_event_registration_status(lecture) }}</td>
+                        <td>
+                            {{ event_macros.display_event_registration_count(lecture) }}
+                        </td>
                         <td>
                             {{ event_macros.display_event_ispublic_badge(lecture) }}
                         </td>
@@ -96,5 +98,19 @@
         {% endif %}
     </div>
 
+    {% if lectures|length == 0 %}
+        <div class="content mt-5">
+            <h2>{{ triagePurpose.motivationShort }}</h2>
+        </div>
+
+        <div class="content tile">
+            <p>{{ triagePurpose.motivation|nl2br }}</p>
+            <p>
+                <a class="btn btn-primary" href="{{ path("event_new") }}">
+                    {{ "new.title"|trans({}, "event") }}
+                </a>
+            </p>
+        </div>
+    {% endif %}
 
 {% endblock %}
