@@ -4,4 +4,5 @@ index:
   upcoming_events: 'Upcoming events'
   registered: 'registered'
   deregister: 'deregister'
-  required_registrations: 'required registrations'
+  missing_registrations: 'registrations missing'
+  confirmed: 'confirmed'

@@ -172,7 +172,12 @@ class Event extends BaseEntity
 
     public function sufficientRegistrations(): bool
     {
-        return $this->registrations->count() >= $this->minRegistrations;
+        return 0 === $this->missingRegistrations();
+    }
+
+    public function missingRegistrations(): int
+    {
+        return max(0, $this->minRegistrations - $this->registrations->count());
     }
 
     public function getRegistrationForUser(?User $user): ?Registration
