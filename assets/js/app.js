@@ -28,15 +28,12 @@ $(document)
       .popover()
 
     if ($('.masonry-grid').length) {
-      // noinspection JSUnusedLocalSymbols
-      const masonry = new Masonry('.masonry-grid', {
-        columnWidth: '.masonry-grid-sizer',
-        itemSelector: '.masonry-grid-item',
-        percentPosition: true
-      })
+      window.setTimeout(function () {
+        initializeMasonry()
+      }, 100)
 
       window.setTimeout(function () {
-        masonry.resize()
+        initializeMasonry()
       }, 1000)
     }
 
@@ -56,3 +53,12 @@ $(document)
         window.location.reload(true)
       })
   })
+
+function initializeMasonry () {
+  // eslint-disable-next-line no-new
+  new Masonry('.masonry-grid', {
+    columnWidth: '.masonry-grid-sizer',
+    itemSelector: '.masonry-grid-item',
+    percentPosition: true
+  })
+}
