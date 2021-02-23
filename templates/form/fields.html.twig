@@ -12,7 +12,15 @@
 {% block edit_event_trait_widget %}
     {% import _self as own_macros %}
 
-    {{ form_row(form.title) }}
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.title) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.author) }}
+        </div>
+    </div>
+
     {{ form_row(form.description) }}
 
     <div class="row">

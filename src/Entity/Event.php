@@ -194,4 +194,14 @@ class Event extends BaseEntity
 
         return null;
     }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): void
+    {
+        $this->author = $author;
+    }
 }

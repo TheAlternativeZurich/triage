@@ -74,7 +74,7 @@ class MyTwigExtension extends AbstractExtension
     public function dateTimeFormatFilter(?DateTime $date): string
     {
         if ($date instanceof DateTime) {
-            return $this->prependDayName($date).', '.$date->format(DateTimeFormatter::DATE_TIME_FORMAT);
+            return $date->format(DateTimeFormatter::DATE_TIME_FORMAT);
         }
 
         return '-';

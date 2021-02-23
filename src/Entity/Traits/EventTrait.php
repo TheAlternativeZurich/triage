@@ -43,6 +43,13 @@ trait EventTrait
      */
     private $parts;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $author;
+
     public function getTitle(): ?string
     {
         return $this->title;

@@ -28,12 +28,12 @@
         {% for event in events %}
             <div class="masonry-grid-item">
                 <div class="content tile {% if event.sufficientRegistrations %}border border-success{% endif %}">
-                    <h2>
+                    <h3>
                         {{ event.title }}
                         <a class="inline-icon" href="{{ path("event_share", {"identifier": event.identifier}) }}">
                             <i class="fal fa-share"></i>
                         </a>
-                    </h2>
+                    </h3>
                     <p class="text-secondary">
                         {{ event_macros.display_event_datetime(event) }}
                     </p>

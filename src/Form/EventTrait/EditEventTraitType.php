@@ -32,6 +32,7 @@ class EditEventTraitType extends AbstractType
         } else {
             $builder->add('startDate', DateType::class, ['widget' => 'single_text', 'help' => 'start_date_help']);
         }
+        $builder->add('author', TextType::class, ['required' => false]);
         $builder->add('parts', NumberType::class);
     }
 

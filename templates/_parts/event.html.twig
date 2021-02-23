@@ -1,13 +1,17 @@
 {% macro display_event_datetime(event) %}
-    {{ event.startDate|dateFormat }}
-    -
-    {{ event.startDate|timeFormat }}
+    {{ event.startDate|dateTimeFormat }}
     -
     {{ "parts_pluralization"|trans({'{count}': event.parts}, "trait_event") }}
+    {% if event.author %}
+        - {{ event.author }}
+    {% endif %}
 {% endmacro %}
 
 {% macro display_event_datetime_inline(event) %}
     {{ event.startDate|dateFormat }} | {{ event.startDate|timeFormat }} | {{ event.parts }} {{ "parts_pluralization"|trans({'{count}': event.parts}, "trait_event") }}
+    {% if event.author %}
+        | {{ event.author }}
+    {% endif %}
 {% endmacro %}
 
 {% macro display_event_ispublic_badge(event) %}
