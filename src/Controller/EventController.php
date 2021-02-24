@@ -79,7 +79,7 @@ class EventController extends BaseDoctrineController
         $message = $translator->trans('register.success.registered', [], 'event');
         $this->displaySuccess($message);
 
-        if ($event->getMinRegistrations() > 0 && $event->getMinRegistrations() >= $event->getRegistrations()->count() && !$event->getSufficientRegistrationsNotificationSent()) {
+        if ($event->getMinRegistrations() > 0 && $event->getMinRegistrations() <= $event->getRegistrations()->count() && !$event->getSufficientRegistrationsNotificationSent()) {
             $emailService->sendEventSufficientRegistrationsNotification($event);
             $event->setSufficientRegistrationsNotificationSent(new \DateTime());
             $this->fastSave($event);

@@ -64,3 +64,8 @@ tasks:
     after: release
     task: deploy
     arguments: { target: '*:*:dev' }
+
+  deploy_prod_after_release:
+    after: release
+    task: deploy
+    arguments: { target: '*:*:prod' }
