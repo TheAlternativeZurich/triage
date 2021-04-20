@@ -135,7 +135,7 @@ class EventController extends BaseDoctrineController
         if ($form->isSubmitted() && $form->isValid()) {
             $identifier = IdentifierHelper::getHumanReadableIdentifier($event->getTitle());
             $event->setIdentifier($identifier);
-            $event->getStartDate()->setTime(17, 00);
+            $event->getStartDate()->setTime(17, 15);
 
             $this->fastSave($event);
 
