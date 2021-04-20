@@ -23,6 +23,7 @@ use App\Service\Interfaces\ConfigurationServiceInterface;
 use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -68,7 +69,7 @@ class EventController extends BaseDoctrineController
     public function registerAction(Event $event, TranslatorInterface $translator, EmailServiceInterface $emailService)
     {
         $existingRegistration = $event->getRegistrationForUser($this->getUser());
-        if ($existingRegistration) {
+        if ($existingRegistration || !$event->canRegister()) {
             throw new BadRequestHttpException();
         }
 
@@ -96,7 +97,7 @@ class EventController extends BaseDoctrineController
     public function deregisterAction(Event $event, TranslatorInterface $translator)
     {
         $existingRegistration = $event->getRegistrationForUser($this->getUser());
-        if (!$existingRegistration) {
+        if (!$existingRegistration || !$event->canDeregister()) {
             throw new BadRequestHttpException();
         }
 
@@ -135,7 +136,7 @@ class EventController extends BaseDoctrineController
         if ($form->isSubmitted() && $form->isValid()) {
             $identifier = IdentifierHelper::getHumanReadableIdentifier($event->getTitle());
             $event->setIdentifier($identifier);
-            $event->getStartDate()->setTime(17, 00);
+            $event->getStartDate()->setTime(17, 15);
 
             $this->fastSave($event);
 
@@ -224,7 +225,8 @@ class EventController extends BaseDoctrineController
     {
         $this->denyAccessUnlessGranted(EventVoter::EVENT_MODERATE, $event);
 
-        $form = $this->createFormBuilder()
+        $form = $this->createFormBuilder(['subject' => $translator->trans('event.subject', ['%event%' => $event->getTitle()], 'email')])
+            ->add('subject', TextType::class, ['disabled' => true, 'translation_domain' => 'event', 'label' => 'registrations.form.subject'])
             ->add('message', TextareaType::class, ['translation_domain' => 'event', 'label' => 'registrations.form.message', 'help' => 'registrations.form.message_help'])
             ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'registrations.form.submit'])
             ->getForm();

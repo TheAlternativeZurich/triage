@@ -6,35 +6,30 @@
 {% trans_default_domain "event" %}
 
 {% block single_content %}
-    <div class="row">
-        <div class="col-md-6">
-            {% if registrations|length == 0 %}
-                <p class="alert alert-info">{{ "registrations.no_registrations_yet"|trans }}</p>
-            {% else %}
-                <table class="table table-hover border-secondary">
-                    <thead>
-                    <tr>
-                        <th>{{ "email"|trans({}, "trait_user") }}</th>
-                        <th>{{ "createdAt"|trans({}, "trait_time") }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for registration in registrations %}
-                        <tr>
-                            <td>
-                                {{ registration.user.email }}
-                            </td>
-                            <td>
-                                {{ registration.createdAt|dateTimeFormat }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
-        </div>
-        <div class="col-md-6">
-            {{ form(form) }}
-        </div>
-    </div>
+    {{ form(form) }}
+    <hr/>
+    {% if registrations|length == 0 %}
+        <p class="alert alert-info">{{ "registrations.no_registrations_yet"|trans }}</p>
+    {% else %}
+        <table class="table table-hover border-secondary">
+            <thead>
+            <tr>
+                <th>{{ "email"|trans({}, "trait_user") }}</th>
+                <th class="text-right">{{ "createdAt"|trans({}, "trait_time") }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for registration in registrations %}
+                <tr>
+                    <td>
+                        {{ registration.user.email }}
+                    </td>
+                    <td class="text-right">
+                        {{ registration.createdAt|dateTimeFormat }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}

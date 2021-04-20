@@ -204,4 +204,16 @@ class Event extends BaseEntity
     {
         $this->author = $author;
     }
+
+    public function canRegister()
+    {
+        $now = new \DateTime('now');
+
+        return $now < $this->startDate;
+    }
+
+    public function canDeregister()
+    {
+        return $this->canRegister();
+    }
 }

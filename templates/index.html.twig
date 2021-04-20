@@ -14,6 +14,7 @@
     <div class="content p-0">
         <div class="container tile mt-5">
             <p class="lead">{{ block('description') }}</p>
+            <p>{{ "index.more_infos"|trans }} <a href="https://thealternative.ch" target="_blank">thealternative.ch</a>.</p>
         </div>
     </div>
 
@@ -25,7 +26,7 @@
 
     <div class="masonry-grid">
         <div class="masonry-grid-sizer"></div>
-        {% for event in events %}
+        {% for event in events|filter(e => e.canRegister) %}
             <div class="masonry-grid-item">
                 <div class="content tile {% if event.sufficientRegistrations %}border border-success{% endif %}">
                     <h3>
@@ -43,7 +44,7 @@
             </div>
         {% endfor %}
 
-
+        <!-- hide sign up for events
         <div class="masonry-grid-item">
             <div class="content tile">
                 <h2>{{ triagePurpose.motivationShort }}</h2>
@@ -54,5 +55,6 @@
                 </p>
             </div>
         </div>
+        -->
     </div>
 {% endblock %}
