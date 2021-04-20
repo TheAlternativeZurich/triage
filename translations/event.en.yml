@@ -60,6 +60,7 @@ registrations:
   title: 'Registrations'
   description: 'View who has already registered'
   form:
+    subject: 'Subject'
     message: 'E-Mail'
     message_help: 'E-Mail will be sent to all participants and yourself (Bcc).'
     submit: 'Send E-Mail to all participants'

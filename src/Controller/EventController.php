@@ -23,6 +23,7 @@ use App\Service\Interfaces\ConfigurationServiceInterface;
 use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -224,7 +225,8 @@ class EventController extends BaseDoctrineController
     {
         $this->denyAccessUnlessGranted(EventVoter::EVENT_MODERATE, $event);
 
-        $form = $this->createFormBuilder()
+        $form = $this->createFormBuilder(['subject' => $translator->trans('event.subject', ['%event%' => $event->getTitle()], 'email')])
+            ->add('subject', TextType::class, ['disabled' => true, 'translation_domain' => 'event', 'label' => 'registrations.form.subject'])
             ->add('message', TextareaType::class, ['translation_domain' => 'event', 'label' => 'registrations.form.message', 'help' => 'registrations.form.message_help'])
             ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'registrations.form.submit'])
             ->getForm();
