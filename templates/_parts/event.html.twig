@@ -29,20 +29,26 @@
 {% macro display_event_registration(event, break = false) %}
     {% import _self as self %}
     {% if event.registrationForUser(app.user) %}
-        <span class="text-success">{{ "register.registered"|trans({}, "event") }}</span>
-        (<a href="{{ path("event_deregister", {"event": event.id}) }}">{{ "deregister.title"|trans({}, "event")|lower }}</a>)
+        <span class="mr-2">
+            <span class="text-success">{{ "register.registered"|trans({}, "event") }}</span>
+            {% if event.canDeregister %}
+                (<a href="{{ path("event_deregister", {"event": event.id}) }}">{{ "deregister.title"|trans({}, "event")|lower }}</a>)
+            {% endif %}
+        </span>
     {% else %}
-        <a class="btn btn-outline-primary" href="{{ path("event_register", {"event": event.id}) }}">
-            {{ "register.title"|trans({}, "event") }}
-        </a>
+        {% if event.canRegister %}
+            <a class="btn btn-outline-primary mr-2" href="{{ path("event_register", {"event": event.id}) }}">
+                {{ "register.title"|trans({}, "event") }}
+            </a>
+        {% endif %}
     {% endif %}
     {% if break %}<br>{% endif %}
     {% if event.sufficientRegistrations %}
-        <span class="ml-2 badge badge-success">
+        <span class="badge badge-success">
             {{ "index.confirmed"|trans({}, "index") }}
         </span>
     {% else %}
-        <span class="ml-2">
+        <span>
             {{ event.missingRegistrations }} {{ "index.missing_registrations"|trans({}, "index") }}
         </span>
     {% endif %}

@@ -69,7 +69,7 @@ class EventController extends BaseDoctrineController
     public function registerAction(Event $event, TranslatorInterface $translator, EmailServiceInterface $emailService)
     {
         $existingRegistration = $event->getRegistrationForUser($this->getUser());
-        if ($existingRegistration) {
+        if ($existingRegistration || !$event->canRegister()) {
             throw new BadRequestHttpException();
         }
 
@@ -97,7 +97,7 @@ class EventController extends BaseDoctrineController
     public function deregisterAction(Event $event, TranslatorInterface $translator)
     {
         $existingRegistration = $event->getRegistrationForUser($this->getUser());
-        if (!$existingRegistration) {
+        if (!$existingRegistration || !$event->canDeregister()) {
             throw new BadRequestHttpException();
         }
 
