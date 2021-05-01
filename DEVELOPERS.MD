@@ -20,7 +20,7 @@ setup:
 - `yarn install` to install frontend dependencies  
 
 developing:
-- `symfony start` to start the symfony server  
+- `symfony server:start` to start the symfony server  
 - `yarn run dev-server` to start the frontend server
 - visit `localhost:8000` and login with `f@thealternative.ch`, `asdf`  
 - test error templates inside TwigBundle/views by accessing `/_error/404` and `/_error/500`
