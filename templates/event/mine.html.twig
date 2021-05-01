@@ -36,7 +36,8 @@
                 {% for lecture in lectures %}
                     <tr>
                         <td>
-                            {{ lecture.title }}<br/>
+                        <a href="{{path('event_share', {"identifier": lecture.identifier})}}" title="{{ "mine.view_public"|trans }}">
+                            {{ lecture.title }}</a><br/>
                             <span class="text-secondary">{{ event_macros.display_event_datetime(lecture) }}</span>
                         </td>
                         <td>
@@ -79,7 +80,8 @@
             <table class="table table-hover border-secondary">
                 <thead>
                 <tr>
-                    <th>{{ "entity.name"|trans({}, "entity_event") }}</th>
+                    <th>
+                    {{ "entity.name"|trans({}, "entity_event") }}</th>
                     <th></th>
                 </tr>
                 </thead>
