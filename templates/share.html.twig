@@ -1,34 +1,38 @@
 {% extends "_content.html.twig" %}
 {% import '_parts/event.html.twig' as event_macros %}
 
-{% block title %}{{ event.title }}{% endblock %}
-{% block description %}{{ event.description|nl2br }}{% endblock %}
+{% block title %}
+	{{ event.title }}
+{% endblock %}
+{% block description %}
+	{{ event.description|nl2br }}
+{% endblock %}
 
 {% trans_default_domain "index" %}
 
 {% block content %}
-    <div class="content p-0">
-        <div class="tile">
-            <h1>{{ block('title') }}</h1>
-            <p class="text-secondary">
-                {{ event_macros.display_event_datetime(event) }}
-            </p>
-            <hr/>
-            <p class="lead">{{ block('description') }}</p>
-            <p>{{ event_macros.display_event_registration(event) }}</p>
-                        
-            <a href="{{ absolute_url(path('event_i_cal', {"identifier": event.identifier})) }}" title="{{ "download_ical"|trans }}">
-            <i class="fal fa-calendar-check"></i>
-            </a>
+	<div class="content p-0">
+		<div class="tile">
+			<h1>{{ block('title') }}</h1>
+			<p class="text-secondary">
+				{{ event_macros.display_event_datetime(event) }}
+			</p>
+			<hr/>
+			<p class="lead">{{ block('description') }}</p>
+			<p>{{ event_macros.display_event_registration(event) }}</p>
 
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fal fa-share"></i>
-                    </div>
-                </div>
-                <input type="text" class="form-control" readonly value="{{ absolute_url(path('event_share', {"identifier": event.identifier})) }}">
-            </div>
-        </div>
-    </div>
+			<a href="{{ absolute_url(path('event_i_cal', {"identifier": event.identifier})) }}" title="{{ "download_ical"|trans }}">
+				<i class="fal fa-calendar-check"></i>
+			</a>
+
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<div class="input-group-text">
+						<i class="fal fa-share"></i>
+					</div>
+				</div>
+				<input type="text" class="form-control" readonly value="{{ absolute_url(path('event_share', {"identifier": event.identifier})) }}">
+			</div>
+		</div>
+	</div>
 {% endblock %}
