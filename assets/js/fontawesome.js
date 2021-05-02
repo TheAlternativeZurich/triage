@@ -11,7 +11,8 @@ import {
   faPassport,
   faMapMarkerAlt,
   faEnvelopeOpen,
-  faShare
+  faShare,
+  faCalendarCheck
 } from '@fortawesome/pro-light-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
@@ -25,6 +26,7 @@ library.add(
   faPassport,
   faMapMarkerAlt,
   faEnvelopeOpen,
-  faShare
+  faShare,
+  faCalendarCheck
 )
 dom.watch()

@@ -17,16 +17,12 @@
             <p class="lead">{{ block('description') }}</p>
             <p>{{ event_macros.display_event_registration(event) }}</p>
 
-            <a href="{{ absolute_url(path('event_i_cal', {"identifier": event.identifier})) }}"
-               title="{{ "download_ical"|trans }}"
-            >
-                <i class="fal fa-calendar-check"></i>
-            </a>
-
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <i class="fal fa-share"></i>
+                        <a href="{{ path('event_ical', {"event": event.id}) }}">
+                            <i class="fal fa-calendar-check"></i>
+                        </a>
                     </div>
                 </div>
                 <input type="text" class="form-control" readonly
