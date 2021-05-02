@@ -1,120 +1,117 @@
 {% extends "_content.html.twig" %}
 {% import '_parts/event.html.twig' as event_macros %}
 
-{% block title %}
-	{{ "mine.title"|trans }}
-{% endblock %}
-{% block description %}
-	{{ "mine.description"|trans }}
-{% endblock %}
+{% block title %}{{ "mine.title"|trans }}{% endblock %}
+{% block description %}{{ "mine.description"|trans }}{% endblock %}
 
 {% trans_default_domain "event" %}
 
 {% block content %}
-	<div class="content p-0">
-		<div class="tile">
-			<h1>{{ block('title') }}</h1>
-			<hr/>
-			<p class="lead">{{ block('description') }}</p>
-		</div>
-	</div>
+    <div class="content p-0">
+        <div class="tile">
+            <h1>{{ block('title') }}</h1>
+            <hr/>
+            <p class="lead">{{ block('description') }}</p>
+        </div>
+    </div>
 
-	<div class="mt-5"></div>
+    <div class="mt-5"></div>
 
-	{% if lectures|length > 0 %}
-		<div class="content">
-			<h2>{{ "mine.constributing_events"|trans }}</h2>
-		</div>
+    {% if lectures|length > 0 %}
+        <div class="content">
+            <h2>{{ "mine.constributing_events"|trans }}</h2>
+        </div>
 
-		<div class="content tile">
-			<table class="table table-hover border-secondary">
-				<thead>
-					<tr>
-						<th>{{ "entity.name"|trans({}, "entity_event") }}</th>
-						<th>{{ "entity.plural"|trans({}, "entity_registration") }}</th>
-						<th>{{ "public"|trans({}, "trait_event") }}</th>
-						<th class="minimal-width"></th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for lecture in lectures %}
-						<tr>
-							<td>
-								<a href="{{path('event_share', {"identifier": lecture.identifier})}}" title="{{ "mine.view_public"|trans }}">
-									{{ lecture.title }}</a><br/>
-								<span class="text-secondary">{{ event_macros.display_event_datetime(lecture) }}</span>
-							</td>
-							<td>
-								{{ event_macros.display_event_registration_count(lecture) }}
-							</td>
-							<td>
-								{{ event_macros.display_event_ispublic_badge(lecture) }}
-							</td>
-							<td>
-								<a class="btn btn-outline-secondary" href="{{ path("event_edit", {"event": lecture.id}) }}">
-									<i class="fal fa-pencil"></i>
-								</a>
-							</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+        <div class="content tile">
+            <table class="table table-hover border-secondary">
+                <thead>
+                <tr>
+                    <th>{{ "entity.name"|trans({}, "entity_event") }}</th>
+                    <th>{{ "entity.plural"|trans({}, "entity_registration") }}</th>
+                    <th>{{ "public"|trans({}, "trait_event") }}</th>
+                    <th class="minimal-width"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for lecture in lectures %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('event_share', {"identifier": lecture.identifier}) }}"
+                               title="{{ "mine.view_public"|trans }}">
+                                {{ lecture.title }}</a><br/>
+                            <span class="text-secondary">{{ event_macros.display_event_datetime(lecture) }}</span>
+                        </td>
+                        <td>
+                            {{ event_macros.display_event_registration_count(lecture) }}
+                        </td>
+                        <td>
+                            {{ event_macros.display_event_ispublic_badge(lecture) }}
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-secondary" href="{{ path("event_edit", {"event": lecture.id}) }}">
+                                <i class="fal fa-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-			<p>
-				<a class="btn btn-outline-primary" href="{{ path("event_new") }}">
-					{{ "new.again_title"|trans({}, "event") }}
-				</a>
-			</p>
+            <p>
+                <a class="btn btn-outline-primary" href="{{ path("event_new") }}">
+                    {{ "new.again_title"|trans({}, "event") }}
+                </a>
+            </p>
 
-		</div>
-	{% endif %}
+        </div>
+    {% endif %}
 
-	<div class="content mt-5">
-		<h2>{{ "mine.registered_events"|trans }}</h2>
-	</div>
+    <div class="content mt-5">
+        <h2>{{ "mine.registered_events"|trans }}</h2>
+    </div>
 
-	<div class="content tile">
-		{% if registrations|length == 0 %}
-			<p class="alert alert-info">
-				{{ "mine.no_registrations_yet"|trans }}
-			</p>
-		{% else %}
-			<table class="table table-hover border-secondary">
-				<thead>
-					<tr>
-						<th>
-							{{ "entity.name"|trans({}, "entity_event") }}</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for registration in registrations %}
-						<tr>
-							<td>
-								{{ registration.event.title }}<br/>
-								<span class="text-secondary">{{ event_macros.display_event_datetime(registration.event) }}</span>
-							</td>
-							<td class="text-right">{{ event_macros.display_event_registration(registration.event, true) }}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		{% endif %}
-	</div>
+    <div class="content tile">
+        {% if registrations|length == 0 %}
+            <p class="alert alert-info">
+                {{ "mine.no_registrations_yet"|trans }}
+            </p>
+        {% else %}
+            <table class="table table-hover border-secondary">
+                <thead>
+                <tr>
+                    <th>
+                        {{ "entity.name"|trans({}, "entity_event") }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for registration in registrations %}
+                    <tr>
+                        <td>
+                            {{ registration.event.title }}<br/>
+                            <span class="text-secondary">{{ event_macros.display_event_datetime(registration.event) }}</span>
+                        </td>
+                        <td class="text-right">{{ event_macros.display_event_registration(registration.event, true) }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
 
-	{% if lectures|length == 0 %}
-		<div class="content mt-5">
-			<h2>{{ triagePurpose.motivationShort }}</h2>
-		</div>
+    {% if lectures|length == 0 %}
+        <div class="content mt-5">
+            <h2>{{ triagePurpose.motivationShort }}</h2>
+        </div>
 
-		<div class="content tile">
-			<p>{{ triagePurpose.motivation|nl2br }}</p>
-			<p>
-				<a class="btn btn-primary" href="{{ path("event_new") }}">
-					{{ "new.title"|trans({}, "event") }}
-				</a>
-			</p>
-		</div>
-	{% endif %}
+        <div class="content tile">
+            <p>{{ triagePurpose.motivation|nl2br }}</p>
+            <p>
+                <a class="btn btn-primary" href="{{ path("event_new") }}">
+                    {{ "new.title"|trans({}, "event") }}
+                </a>
+            </p>
+        </div>
+    {% endif %}
 
 {% endblock %}
