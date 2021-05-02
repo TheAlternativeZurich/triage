@@ -7,7 +7,6 @@ new:
   success:
     created: 'Created event & notified administrators. You will receive an email as soon as the event is published.'
   questions: 'Questions, doubts, special requests?'
-  public: 'Open Public View'
 
 edit:
   title: 'Edit event'
@@ -70,3 +69,5 @@ registrations:
 
   no_registrations_yet: 'No registrations yet.'
 
+ical:
+  title: 'Download event as iCal'

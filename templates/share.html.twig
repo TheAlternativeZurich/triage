@@ -20,7 +20,9 @@
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <a href="{{ path('event_ical', {"event": event.id}) }}">
+                        <a href="{{ path('event_ical', {"event": event.id}) }}"
+                           title="{{ "ical.title"|trans({}, "event") }}"
+                        >
                             <i class="fal fa-calendar-check"></i>
                         </a>
                     </div>
