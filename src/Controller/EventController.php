@@ -21,6 +21,10 @@ use App\Security\Voter\EventVoter;
 use App\Service\ConfigurationService;
 use App\Service\Interfaces\ConfigurationServiceInterface;
 use App\Service\Interfaces\EmailServiceInterface;
+use Eluceo\iCal\Domain\Entity\Calendar;
+use Eluceo\iCal\Domain\ValueObject\DateTime as iCalDateTime;
+use Eluceo\iCal\Domain\ValueObject\TimeSpan;
+use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -107,6 +111,37 @@ class EventController extends BaseDoctrineController
         $this->displaySuccess($message);
 
         return $this->redirectToRoute('index');
+    }
+
+    /**
+     * @Route("/ical/{event}", name="event_ical")
+     */
+    public function icalAction(Event $event): Response
+    {
+        $lectureTime = 45 * $event->getParts() + (15 * $event->getParts() - 1);
+        $duration = max(0, $lectureTime);
+        $occurrence = new TimeSpan(
+            new iCalDateTime($event->getStartDate(), true),
+            new iCalDateTime($event->getStartDate()->modify('+'.$duration.' min'), true)
+        );
+
+        $iCalEvent = (new \Eluceo\iCal\Domain\Entity\Event())
+            ->setSummary($event->getTitle())
+            ->setDescription($event->getDescription())
+            ->setOccurrence($occurrence);
+
+        // 2. Create Calendar domain entity.
+        $icalCalendar = new Calendar([$iCalEvent]);
+
+        // 3. Transform domain entity into an iCalendar component
+        $componentFactory = new CalendarFactory();
+        $calendarComponent = $componentFactory->createCalendar($icalCalendar);
+
+        // 4. Set HTTP Headers & Output
+        return new Response($calendarComponent, Response::HTTP_OK, [
+            'Content-Type' => 'text/calendar; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="cal.ics"',
+        ]);
     }
 
     /**

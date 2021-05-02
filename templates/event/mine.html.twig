@@ -36,7 +36,8 @@
                 {% for lecture in lectures %}
                     <tr>
                         <td>
-                            {{ lecture.title }}<br/>
+                            <a href="{{ path('event_share', {"identifier": lecture.identifier}) }}">
+                                {{ lecture.title }}</a><br/>
                             <span class="text-secondary">{{ event_macros.display_event_datetime(lecture) }}</span>
                         </td>
                         <td>
@@ -87,7 +88,8 @@
                 {% for registration in registrations %}
                     <tr>
                         <td>
-                            {{ registration.event.title }}<br/>
+                            <a href="{{ path('event_share', {"identifier": registration.event.identifier}) }}">
+                                {{ registration.event.title }}</a><br/>
                             <span class="text-secondary">{{ event_macros.display_event_datetime(registration.event) }}</span>
                         </td>
                         <td class="text-right">{{ event_macros.display_event_registration(registration.event, true) }}</td>

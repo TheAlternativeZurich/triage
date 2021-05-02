@@ -69,3 +69,5 @@ registrations:
 
   no_registrations_yet: 'No registrations yet.'
 
+ical:
+  title: 'Download event as iCal'

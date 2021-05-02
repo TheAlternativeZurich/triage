@@ -20,10 +20,16 @@
             <div class="input-group">
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <i class="fal fa-share"></i>
+                        <a href="{{ path('event_ical', {"event": event.id}) }}"
+                           title="{{ "ical.title"|trans({}, "event") }}"
+                        >
+                            <i class="fal fa-calendar-check"></i>
+                        </a>
                     </div>
                 </div>
-                <input type="text" class="form-control" readonly value="{{ absolute_url(path('event_share', {"identifier": event.identifier})) }}">
+                <input type="text" class="form-control" readonly
+                       value="{{ absolute_url(path('event_share', {"identifier": event.identifier})) }}"
+                >
             </div>
         </div>
     </div>
