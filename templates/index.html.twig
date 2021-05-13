@@ -14,37 +14,37 @@
     <div class="content p-0">
         <div class="container tile mt-5">
             <p class="lead">{{ block('description') }}</p>
-            <p>{{ "index.more_infos"|trans }} <a href="https://thealternative.ch" target="_blank">thealternative.ch</a>.</p>
+            <p>{{ "index.more_infos"|trans }} <a href="https://thealternative.ch" target="_blank">thealternative.ch</a>.
+            </p>
         </div>
     </div>
 
-    <div class="mt-5"></div>
-
-    <div class="content mt-5">
-        <h2>{{ "index.upcoming_events"|trans }}</h2>
-    </div>
-
-    <div class="masonry-grid">
-        <div class="masonry-grid-sizer"></div>
-        {% for event in events|filter(e => e.canRegister) %}
-            <div class="masonry-grid-item">
-                <div class="content tile {% if event.sufficientRegistrations %}border border-success{% endif %}">
-                    <h3>
-                        {{ event.title }}
-                        <a class="inline-icon" href="{{ path("event_share", {"identifier": event.identifier}) }}">
-                            <i class="fal fa-share"></i>
-                        </a>
-                    </h3>
-                    <p class="text-secondary">
-                        {{ event_macros.display_event_datetime(event) }}
-                    </p>
-                    <p>{{ event.description|nl2br }}</p>
-                    <p>{{ event_macros.display_event_registration(event) }}</p>
+    {% if events|filter(e => e.canRegister)|length > 0 %}
+        <div class="mt-5"></div>
+        <div class="content mt-5">
+            <h2>{{ "index.upcoming_events"|trans }}</h2>
+        </div>
+        <div class="masonry-grid">
+            <div class="masonry-grid-sizer"></div>
+            {% for event in events|filter(e => e.canRegister) %}
+                <div class="masonry-grid-item">
+                    <div class="content tile {% if event.sufficientRegistrations %}border border-success{% endif %}">
+                        <h3>
+                            {{ event.title }}
+                            <a class="inline-icon" href="{{ path("event_share", {"identifier": event.identifier}) }}">
+                                <i class="fal fa-share"></i>
+                            </a>
+                        </h3>
+                        <p class="text-secondary">
+                            {{ event_macros.display_event_datetime(event) }}
+                        </p>
+                        <p>{{ event.description|nl2br }}</p>
+                        <p>{{ event_macros.display_event_registration(event) }}</p>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
 
-        <!-- hide sign up for events
+            <!-- hide sign up for events
         <div class="masonry-grid-item">
             <div class="content tile">
                 <h2>{{ triagePurpose.motivationShort }}</h2>
@@ -56,5 +56,29 @@
             </div>
         </div>
         -->
+        </div>
+    {% else %}
+        <p class="alert alert-info mt-4">
+            {{ "index.no_more_events"|trans }}
+        </p>
+    {% endif %}
+
+    <div class="content mt-5">
+        <h2>{{ "index.past_events"|trans }}</h2>
+    </div>
+
+    <div class="content p-0">
+        <div class="container tile mt-1">
+            <table class="table table-striped border">
+                <tbody>
+                {% for event in events|filter(e => not e.canRegister) %}
+                    <tr>
+                        <td>{{ event.title }}</td>
+                        <td class="minimal-width">{{ event.startDate|dateFormat }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
