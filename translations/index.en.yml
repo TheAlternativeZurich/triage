@@ -7,3 +7,5 @@ index:
   missing_registrations: 'registrations missing'
   confirmed: 'confirmed'
   more_infos: Past events, recordings, and more about TheAlternative on
+  no_more_events: 'All events this semester are over. See you in the next!'
+  past_events: 'Past events'

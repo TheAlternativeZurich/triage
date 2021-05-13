@@ -282,6 +282,10 @@ ServerSignature Off
     Header merge Cache-Control "no-transform"
 </IfModule>
 
+# Opt out google cohort tracking
+<IfModule mod_headers.c>
+    Header always set Permissions-Policy: interest-cohort=()
+</IfModule>
 
 # remove ETags from files as resources are sent with far-future expires headers.
 FileETag None
