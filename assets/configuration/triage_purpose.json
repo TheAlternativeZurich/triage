@@ -1,8 +1,6 @@
 {
-  "title": "TheAlternative: REPLICATE",
-  "description": "Vendor lock-in and restrictions hurt your productivity and wallet. To truly unlock your potential, you need truly accessible resources: Be it science, hardware, software or file formats.\n\nREPLICATE lets you learn about sustainable alternatives to your digital life. We exchange ideas, tools & technology about Free Software & Open Hardware and anything in between.",
-  "motivation_short": "Your area of expertise is missing?",
-  "motivation": "Have you built something cool and can teach us how? Use some obscure technology which does not get enough love? Know something about freedom, privacy or sustainability you feel others should know too? Share your knowledge with your peers!\n\nRequired are only two things: Be experienced in what you are sharing, and keep it thematically within the spirit of REPLICATE.\n\nWe help you to gather a truly interested audience, to collect constructive feedback, and maybe deliver a small surprise to your doorstep :)",
-  "startDate": "2021-04-19",
-  "endDate": "2021-05-14"
+  "title": "TheAlternative: LinuxDays",
+  "description": "This semester, we'll help you install and understand Linux. Further, we guide you towards automating your workflows with the Linux Toolkit and Bash courses. We'll finish the LinuxDays with our one-time Privacy and Piracy talks.",
+  "startDate": "2021-10-19",
+  "endDate": "2021-11-11"
 }

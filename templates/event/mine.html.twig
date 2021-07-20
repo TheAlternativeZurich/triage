@@ -99,20 +99,4 @@
             </table>
         {% endif %}
     </div>
-
-    {% if lectures|length == 0 %}
-        <div class="content mt-5">
-            <h2>{{ triagePurpose.motivationShort }}</h2>
-        </div>
-
-        <div class="content tile">
-            <p>{{ triagePurpose.motivation|nl2br }}</p>
-            <p>
-                <a class="btn btn-primary" href="{{ path("event_new") }}">
-                    {{ "new.title"|trans({}, "event") }}
-                </a>
-            </p>
-        </div>
-    {% endif %}
-
 {% endblock %}

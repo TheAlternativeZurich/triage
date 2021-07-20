@@ -6,7 +6,6 @@
 {% trans_default_domain "event" %}
 
 {% block form_content_before %}
-    <p>{{ triagePurpose.motivation|nl2br }}</p>
     <p class="alert alert-info">
         <b>{{ "new.event_window"|trans }}</b>: {{ triagePurpose.startDate|dateFormat }} - {{ triagePurpose.endDate|dateFormat }}<br/>
         {{ "new.questions"|trans }}
