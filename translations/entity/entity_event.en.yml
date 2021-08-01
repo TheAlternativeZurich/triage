@@ -13,3 +13,6 @@ is_not_public: 'hidden'
 
 identifier: 'Identifier'
 identifier_help: 'Do not change after publish! External links may break.'
+
+lecturer: 'Lecturer'
+lecturer_help: 'Who is responsible for the event. Able to view participants and send them emails.'
