@@ -42,8 +42,6 @@
     <hr/>
 
     {{ form_row(form.minRegistrations) }}
-
-    {{ form_row(form.experience) }}
 {% endblock %}
 
 {% block moderate_event_widget %}
@@ -62,8 +60,10 @@
 
     {{ form_row(form.minRegistrations) }}
 
-    {{ form_row(form.experience) }}
+    <hr>
 
+    {{ form_row(form.lecturer) }}
+    {{ form_row(form.experience) }}
 
     <div class="row mt-4">
         <div class="col">
