@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class EventFixture extends Fixture implements OrderedFixtureInterface
 {
-    const ORDER = UserFixture::ORDER + 1;
+    public const ORDER = UserFixture::ORDER + 1;
 
     /**
      * @var SerializerInterface

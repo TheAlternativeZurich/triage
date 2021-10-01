@@ -18,10 +18,10 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class EventVoter extends Voter
 {
-    const EVENT_REGISTER = 'EVENT_REGISTER';
-    const EVENT_CREATE = 'EVENT_CREATE';
-    const EVENT_EDIT = 'EVENT_EDIT';
-    const EVENT_MODERATE = 'EVENT_MODERATE';
+    public const EVENT_REGISTER = 'EVENT_REGISTER';
+    public const EVENT_CREATE = 'EVENT_CREATE';
+    public const EVENT_EDIT = 'EVENT_EDIT';
+    public const EVENT_MODERATE = 'EVENT_MODERATE';
 
     /**
      * Determines if the attribute and subject are supported by this voter.

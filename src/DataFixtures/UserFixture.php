@@ -18,10 +18,10 @@ use Doctrine\Persistence\ObjectManager;
 
 class UserFixture extends Fixture implements OrderedFixtureInterface
 {
-    const ORDER = 1;
+    public const ORDER = 1;
 
-    const LECTURER_REFERENCE = 'LECTURER';
-    const USER_REFERENCE = 'USER';
+    public const LECTURER_REFERENCE = 'LECTURER';
+    public const USER_REFERENCE = 'USER';
 
     public function load(ObjectManager $manager)
     {
