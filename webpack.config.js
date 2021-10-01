@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore')
+const path = require('path');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -62,7 +63,9 @@ Encore
   // enables Sass/SCSS support
   .enableSassLoader(options => {
     options.implementation = require('sass')
+    options.sassOptions.quietDeps = true
   })
+
   .autoProvidejQuery()
 
   // uncomment to get integrity="..." attributes on your script & link tags
@@ -70,7 +73,17 @@ Encore
   .enableIntegrityHashes(Encore.isProduction())
 
   .configureDevServerOptions(options => {
-    options.writeToDisk = true
+    // hotfix for webpack-dev-server 4.0.0rc0
+    // @see: https://github.com/symfony/webpack-encore/issues/951#issuecomment-840719271
+    delete options.client
+
+    // options.firewall = false
+    options.https = {
+      pfx: path.join(process.env.HOME, '.symfony/certs/default.p12'),
+    }
+    options.devMiddleware = {
+      writeToDisk: true
+    }
   })
 
 module.exports = Encore.getWebpackConfig()

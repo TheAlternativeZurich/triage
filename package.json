@@ -5,7 +5,6 @@
         "@fortawesome/pro-light-svg-icons": "^5",
         "@fortawesome/pro-regular-svg-icons": "^5",
         "@fortawesome/pro-solid-svg-icons": "^5",
-        "@fortawesome/vue-fontawesome": "^0.1",
         "bootstrap": "^4",
         "flatpickr": "^4.6.6",
         "foundation-emails": "^2.3.1",
@@ -16,7 +15,7 @@
         "typeface-open-sans": "^0.0.75"
     },
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.31.0",
+        "@symfony/webpack-encore": "^1.6.1",
         "autoprefixer": "^9.8.6",
         "core-js": "^3.0.0",
         "css-loader": "^4.2.2",
@@ -27,7 +26,8 @@
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-standard": "^4.0.1",
         "eslint-plugin-vue": "^7.0.0-beta.4",
-        "postcss-loader": "^3.0.0",
+        "file-loader": "^6.0.0",
+        "postcss-loader": "^6.1.1",
         "regenerator-runtime": "^0.13.2",
         "sass": "^1.26.10",
         "sass-loader": "^9.0.0",
@@ -39,7 +39,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server --pfx=$HOME/.symfony/certs/default.p12 --https --port 8080 --disable-host-check",
+        "dev-server": "encore dev-server --port 8080",
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress",
