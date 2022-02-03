@@ -13,6 +13,7 @@
     "ext-zip": "*",
     "composer/package-versions-deprecated": "^1.11",
     "doctrine/annotations": "^1.0",
+    "doctrine/dbal": "^2.9",
     "doctrine/doctrine-bundle": "^2.1",
     "doctrine/doctrine-migrations-bundle": "^3.0",
     "doctrine/orm": "^2.7",
@@ -69,7 +70,10 @@
     "platform": {
       "php": "7.4"
     },
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "symfony/flex": true
+    }
   },
   "autoload": {
     "psr-4": {
