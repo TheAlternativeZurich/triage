@@ -46,6 +46,7 @@ install:
 before_script:
   # frontend
   - yarn encore production
+  - yarn encore dev # required for email test to work in unit test
 
   # backend
   - php vendor/bin/requirements-checker # check travis image supports symfony application
