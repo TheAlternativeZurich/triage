@@ -14,7 +14,6 @@ import {
   faShare,
   faCalendarCheck
 } from '@fortawesome/pro-light-svg-icons'
-import '@fortawesome/fontawesome-svg-core/styles.css'
 
 // configure fontawesome
 config.autoAddCss = false
