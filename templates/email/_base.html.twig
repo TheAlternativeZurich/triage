@@ -1,5 +1,5 @@
 {% trans_default_domain "email" %}
-{% apply inky_to_html|inline_css(encore_entry_css_source('email')) %}
+{% apply inky_to_html|inline_css(source('@build/email.css')) %}
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
     <html xmlns="https://www.w3.org/1999/xhtml">
     <head>

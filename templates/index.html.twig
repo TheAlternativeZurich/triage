@@ -39,7 +39,13 @@
                             {{ event_macros.display_event_datetime(event) }}
                         </p>
                         <p>{{ event.description|nl2br }}</p>
-                        <p>{{ event_macros.display_event_registration(event) }}</p>
+                        <p>
+                            <a class="btn btn-sm btn-outline-primary" href="{{ path('event_ical', {"event": event.id}) }}"
+                               title="{{ "ical.title"|trans({}, "event") }}">
+                                <i class="fal fa-calendar-check"></i>
+                            </a>
+                            {{ event_macros.display_event_registration(event) }}
+                        </p>
                     </div>
                 </div>
             {% endfor %}
