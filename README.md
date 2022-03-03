@@ -8,4 +8,4 @@ TheAlternative is a student society which organises semesterly lectures about to
 
 This tool allows users to register for upcoming events. Events are only organized if enough registrations are recorded.
 
-Users can also propose their own events. An administrator reviews and published the proposed events for others.
+Users can also propose their own events. An administrator reviews and publishes the proposed events.
