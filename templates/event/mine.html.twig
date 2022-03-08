@@ -17,12 +17,12 @@
 
     <div class="mt-5"></div>
 
-    {% if lectures|length > 0 %}
-        <div class="content">
-            <h2>{{ "mine.constributing_events"|trans }}</h2>
-        </div>
+    <div class="content">
+        <h2>{{ "mine.constributing_events"|trans }}</h2>
+    </div>
+    <div class="content tile">
 
-        <div class="content tile">
+        {% if lectures|length > 0 %}
             <table class="table table-hover border-secondary">
                 <thead>
                 <tr>
@@ -58,14 +58,14 @@
                 </tbody>
             </table>
 
+        {% else %}
             <p>
                 <a class="btn btn-outline-primary" href="{{ path("event_new") }}">
-                    {{ "new.again_title"|trans({}, "event") }}
+                    {{ "new.title"|trans({}, "event") }}
                 </a>
             </p>
-
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 
     <div class="content mt-5">
         <h2>{{ "mine.registered_events"|trans }}</h2>
