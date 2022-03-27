@@ -28,7 +28,7 @@ class IdentifierHelper
             $character = $lowercase[$i];
             $characterValue = ord($character);
 
-            //0-9, a-z
+            // 0-9, a-z
             if (($characterValue >= 48 && $characterValue <= 57) ||
                 ($characterValue >= 97 && $characterValue <= 122)) {
                 $result .= $character;
