@@ -1,6 +1,6 @@
 # Introduction
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) 
-[![Build Status](https://api.travis-ci.com/TheAlternativeZurich/triage.svg?branch=master)](https://travis-ci.com/TheAlternativeZurich/triage)
+[![Build Status](https://app.travis-ci.com/TheAlternativeZurich/triage.svg?branch=master)](https://app.travis-ci.com/TheAlternativeZurich/triage)
 [![Scrutinizer](https://scrutinizer-ci.com/g/TheAlternativeZurich/triage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/TheAlternativeZurich/triage)
 
 ## About
