@@ -15,20 +15,34 @@ use App\Entity\User;
 use App\Tests\Traits\AssertAuthenticationTrait;
 use App\Tests\Traits\AssertEmailTrait;
 use Doctrine\Persistence\ManagerRegistry;
-use Liip\TestFixturesBundle\Test\FixturesTrait;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
-    use FixturesTrait;
     use AssertEmailTrait;
     use AssertAuthenticationTrait;
 
+    /** @var AbstractDatabaseTool */
+    protected $databaseTool;
+
+    protected $client;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->client = self::createClient();
+
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+    }
+
     public function testCanSetup()
     {
-        $client = $this->createClient();
-        $this->loadFixtures();
+        $client = $this->client;
+        $this->databaseTool->loadFixtures();
 
         $email = 'f@mangel.io';
         $password = 'asdf1234';
@@ -46,8 +60,8 @@ class SecurityControllerTest extends WebTestCase
 
     public function testCanRegister()
     {
-        $client = $this->createClient();
-        $this->loadFixtures();
+        $client = $this->client;
+        $this->databaseTool->loadAllFixtures();
 
         $email = 'f@mangel.io';
         $password = 'asdf1234';
