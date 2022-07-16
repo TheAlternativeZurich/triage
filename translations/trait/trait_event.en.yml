@@ -3,7 +3,7 @@ trait:
 
 title: "Title"
 description: "Description"
-start_date: "Date (begin: 18:00)"
+start_date: "Date (begin: 18:15)"
 start_date_help: "Try to stay within the event window / not collide with other events."
 parts: "Parts (each 45 minutes)"
 parts_pluralization: "{count} x 45 minutes"
