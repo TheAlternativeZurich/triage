@@ -200,7 +200,7 @@ class EventController extends BaseDoctrineController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $event->getStartDate()->setTime(17, 00);
+            $event->getStartDate()->setTime(18, 15);
             $this->fastSave($event);
 
             $message = $translator->trans('edit.success.edited', [], 'event');
