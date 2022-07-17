@@ -57,14 +57,12 @@
                 {% endfor %}
                 </tbody>
             </table>
-
-        {% else %}
+        {% endif %}
             <p>
                 <a class="btn btn-outline-primary" href="{{ path("event_new") }}">
                     {{ "new.title"|trans({}, "event") }}
                 </a>
             </p>
-        {% endif %}
     </div>
 
     <div class="content mt-5">
